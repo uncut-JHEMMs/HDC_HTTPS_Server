@@ -1,0 +1,96 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 1 (0x1)
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=US, O=SSTrain AS, OU=SSTrain Serversign Certificate Authority, CN=SSTrain Serversign CA
+        Validity
+            Not Before: Feb  9 14:58:22 2022 GMT
+            Not After : Feb  9 14:58:22 2027 GMT
+        Subject: C=US, O=SSTrain AS, CN=Test Two
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:bf:b1:61:27:22:f9:3b:9d:51:ef:38:2c:8b:35:
+                    26:82:6e:e1:46:f9:83:f9:d3:20:4f:36:da:a6:44:
+                    cb:a7:34:c6:02:88:89:ac:72:57:a2:b0:2a:ce:2c:
+                    d1:dd:52:8d:80:9a:b1:89:0e:de:36:8f:86:a1:fe:
+                    da:66:19:bc:0e:f4:2d:16:c1:f0:d4:c5:48:e1:d7:
+                    20:90:0e:7e:2b:4e:48:d2:11:0b:63:bf:8a:24:87:
+                    c7:0e:4e:d2:fd:ed:9a:e9:b0:db:37:ea:c6:78:7b:
+                    bb:0f:f1:34:ad:18:e5:8d:4b:0c:e6:63:ff:8f:f5:
+                    82:c2:66:e8:bf:42:4f:20:c6:ef:21:b9:eb:91:06:
+                    91:9c:33:6a:b1:ae:21:f2:19:28:e6:04:05:94:de:
+                    ef:64:2e:35:42:25:b0:f8:ef:5d:4d:96:2d:a8:0f:
+                    da:35:12:91:9a:95:43:3f:ba:4a:f0:9e:61:7b:c3:
+                    92:14:47:1a:f2:94:cc:27:fd:2f:33:72:33:9b:1e:
+                    04:c8:7d:c2:7b:b2:10:40:95:10:74:08:73:11:b1:
+                    05:fc:b2:c5:cc:e1:49:f5:b2:5b:aa:68:ba:f4:ca:
+                    29:2d:54:98:9e:9e:4b:e3:28:d3:ab:5b:ff:c7:fa:
+                    f3:bc:ed:a5:a5:9a:7f:24:10:dc:6d:51:59:cb:03:
+                    a6:1b
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Key Usage: critical
+                Digital Signature, Certificate Sign, CRL Sign
+            X509v3 Basic Constraints: 
+                CA:TRUE
+            X509v3 Extended Key Usage: critical
+                Code Signing, Any Extended Key Usage
+            X509v3 Subject Key Identifier: 
+                5D:75:8B:F4:05:FC:45:47:49:92:3E:5E:39:E3:D5:AE:A4:38:57:12
+            X509v3 Authority Key Identifier: 
+                keyid:11:3E:8C:45:A9:95:E6:8C:0C:7B:DA:B6:B0:55:85:B9:4F:54:8E:E9
+
+            Authority Information Access: 
+                CA Issuers - URI:http://sstrain.com/ca/serversign-ca.cer
+
+            X509v3 CRL Distribution Points: 
+
+                Full Name:
+                  URI:http://sstrain.com/ca/serversign-ca.crl
+
+            X509v3 Subject Alternative Name: 
+                email:testtwo@gmail.com
+    Signature Algorithm: sha1WithRSAEncryption
+         0a:0f:2c:07:f4:48:55:05:12:04:5e:a3:22:c1:29:72:d4:e2:
+         fc:47:64:a8:17:d4:62:92:58:71:dc:77:0a:a4:64:cc:c5:db:
+         28:d2:1e:23:bc:54:5d:23:a9:01:8d:2b:8a:a7:62:e0:21:ce:
+         63:61:9f:41:76:2d:77:bf:94:5a:bf:03:f2:60:ad:43:c8:43:
+         fd:3f:8b:93:b4:ba:57:df:47:ab:e4:f3:9c:60:e6:0e:08:86:
+         16:1c:cd:6f:51:b1:30:30:13:05:c3:10:03:b1:aa:1a:f9:1a:
+         75:01:84:8e:ab:1f:8c:e5:ee:07:9e:68:10:21:7a:48:39:fb:
+         82:b0:46:eb:69:40:82:47:d1:af:2c:8d:d0:4c:f4:6d:5d:4b:
+         c7:83:65:ed:9f:fe:98:c0:a4:15:4b:7b:f0:ca:03:e1:bb:12:
+         00:3c:81:03:24:4a:00:59:4a:91:c5:87:2c:f6:2d:66:0e:ca:
+         5d:1e:d9:fa:1f:05:76:f6:18:23:04:cd:36:bf:3f:a7:e3:e7:
+         07:49:9e:b4:cf:44:e4:1d:0b:31:5e:b5:78:16:0a:3e:fb:fd:
+         e0:a2:5e:0d:fd:ee:ff:ed:a5:a8:c4:38:9c:d9:4d:e8:8a:8e:
+         82:e6:42:32:0a:e2:23:ee:e9:f9:85:ab:99:85:ae:c5:d4:5c:
+         4b:24:34:e5
+-----BEGIN CERTIFICATE-----
+MIIERDCCAyygAwIBAgIBATANBgkqhkiG9w0BAQUFADB1MQswCQYDVQQGEwJVUzET
+MBEGA1UECgwKU1NUcmFpbiBBUzExMC8GA1UECwwoU1NUcmFpbiBTZXJ2ZXJzaWdu
+IENlcnRpZmljYXRlIEF1dGhvcml0eTEeMBwGA1UEAwwVU1NUcmFpbiBTZXJ2ZXJz
+aWduIENBMB4XDTIyMDIwOTE0NTgyMloXDTI3MDIwOTE0NTgyMlowNTELMAkGA1UE
+BhMCVVMxEzARBgNVBAoMClNTVHJhaW4gQVMxETAPBgNVBAMMCFRlc3QgVHdvMIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv7FhJyL5O51R7zgsizUmgm7h
+RvmD+dMgTzbapkTLpzTGAoiJrHJXorAqzizR3VKNgJqxiQ7eNo+Gof7aZhm8DvQt
+FsHw1MVI4dcgkA5+K05I0hELY7+KJIfHDk7S/e2a6bDbN+rGeHu7D/E0rRjljUsM
+5mP/j/WCwmbov0JPIMbvIbnrkQaRnDNqsa4h8hko5gQFlN7vZC41QiWw+O9dTZYt
+qA/aNRKRmpVDP7pK8J5he8OSFEca8pTMJ/0vM3Izmx4EyH3Ce7IQQJUQdAhzEbEF
+/LLFzOFJ9bJbqmi69MopLVSYnp5L4yjTq1v/x/rzvO2lpZp/JBDcbVFZywOmGwID
+AQABo4IBHTCCARkwDgYDVR0PAQH/BAQDAgGGMAwGA1UdEwQFMAMBAf8wHAYDVR0l
+AQH/BBIwEAYIKwYBBQUHAwMGBFUdJQAwHQYDVR0OBBYEFF11i/QF/EVHSZI+Xjnj
+1a6kOFcSMB8GA1UdIwQYMBaAFBE+jEWpleaMDHvatrBVhblPVI7pMEMGCCsGAQUF
+BwEBBDcwNTAzBggrBgEFBQcwAoYnaHR0cDovL3NzdHJhaW4uY29tL2NhL3NlcnZl
+cnNpZ24tY2EuY2VyMDgGA1UdHwQxMC8wLaAroCmGJ2h0dHA6Ly9zc3RyYWluLmNv
+bS9jYS9zZXJ2ZXJzaWduLWNhLmNybDAcBgNVHREEFTATgRF0ZXN0dHdvQGdtYWls
+LmNvbTANBgkqhkiG9w0BAQUFAAOCAQEACg8sB/RIVQUSBF6jIsEpctTi/EdkqBfU
+YpJYcdx3CqRkzMXbKNIeI7xUXSOpAY0riqdi4CHOY2GfQXYtd7+UWr8D8mCtQ8hD
+/T+Lk7S6V99Hq+TznGDmDgiGFhzNb1GxMDATBcMQA7GqGvkadQGEjqsfjOXuB55o
+ECF6SDn7grBG62lAgkfRryyN0Ez0bV1Lx4Nl7Z/+mMCkFUt78MoD4bsSADyBAyRK
+AFlKkcWHLPYtZg7KXR7Z+h8FdvYYIwTNNr8/p+PnB0metM9E5B0LMV61eBYKPvv9
+4KJeDf3u/+2lqMQ4nNlN6IqOguZCMgriI+7p+YWrmYWuxdRcSyQ05Q==
+-----END CERTIFICATE-----

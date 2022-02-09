@@ -1,0 +1,5 @@
+V	301231235959Z		01	unknown	/C=US/O=SSTrain AS/OU=SSTrain Root Certificate Authority/CN=SSTrain Root CA
+V	301231235959Z		02	unknown	/C=US/O=SSTrain AS/OU=SSTrain Root Certificate Authority/CN=SSTrain Root CA
+V	320209142122Z		03	unknown	/C=US/O=SSTrain AS/OU=SSTrain Docsign Certificate Authority/CN=SSTrain Docsign CA
+V	320209143050Z		04	unknown	/C=US/O=SSTrain AS/OU=SSTrain Serversign Certificate Authority/CN=SSTrain Serversign CA
+V	320209152201Z		05	unknown	/C=US/O=SSTrain AS/OU=SSTrain TLS Certificate Authority/CN=SSTrain TLS CA

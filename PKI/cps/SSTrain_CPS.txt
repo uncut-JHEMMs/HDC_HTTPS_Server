@@ -1,0 +1,8 @@
+This document sets forthe policies related to the issuance and management of certificates.
+
+The SSTrain AS exists solely for the purpose of training and education, and shouldn't be
+trusted anywhere outside of an educational setting. Keys and certificates are issued on
+an as-needed basis for the purpose of fulfilling educational goals, and can be revoked 
+for any or no reason without warning. Keys and certificates are stored on the user's 
+personal computer encrypted with a password, but may be moved to other machines as 
+needed to fulfill educational goals.
