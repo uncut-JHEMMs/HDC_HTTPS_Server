@@ -51,6 +51,16 @@ int buildServer(httpserver::create_webserver& cw, ServerConfig& sc){
     //max connections
     cw.per_IP_connection_limit(sc.maxConnectionsPerIP);
     //https stuff later
+    if (sc.useHTTPS){
+        cw.use_ssl();
+        cw.https_mem_key(sc.pathToKeyFile);
+        cw.https_mem_cert(sc.pathToCertFile);
+    }
+    else {
+        cw.no_ssl();
+    }
+    //need to add connection timeout
+    //need to add dual stack/ipv6
     return 0;
 }
 int main(int argc, char **argv)
