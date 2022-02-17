@@ -43,8 +43,8 @@ struct ServerConfig{
     //whether or not the server should block this thread
     //bool blocks
     //https needs these
-    //std::string pathToKeyFile;
-    //std::string pathToCertFile;
+    std::string pathToKeyFile;
+    std::string pathToCertFile;
     
 
     /*A reasonable number of threads is a coefficient of the available number
@@ -76,27 +76,35 @@ struct ServerConfig{
         std::string key, value;
         //find the key and value. If bad format, return a bad format code
         if (std::getline(streamLine, key, '=')){
+            //assign the members
             if (std::getline(streamLine,value)){
-                if (!isValidNumber(value)) return 2; //bad value code
-                else{//here we assign the members
                     if (key == "UTOPIA_PORT"){
+                        if (!isValidNumber(value)) return 2; //bad value code
                         portNumber = stoi(value);
                     }
                     else if (key == "UTOPIA_TPS"){
+                        if (!isValidNumber(value)) return 2;
                         threadPoolSize = stoi(value);
                     }
                     else if (key == "UTOPIA_CONNECTIONS"){
+                        if (!isValidNumber(value)) return 2;
                         maxConnectionsPerIP = stoi(value);
                     }
                     else if (key == "UTOPIA_TLS"){
+                        if (!isValidNumber(value)) return 2;
                         if (value == "0") useHTTPS = false;
                         else useHTTPS = true;
+                    }
+                    else if (key == "UTOPIA_TLS_CERT"){
+                        pathToCertFile = value;
+                    }
+                    else if (key == "UTOPIA_TLS_KEY"){
+                        pathToKeyFile = value;
                     }
                     //some unrecognized key, so just return a code. Can also use this to do comments.
                     else {
                         return 3;
                     }
-                }
             }
             else return 1;
         }
@@ -148,6 +156,13 @@ struct ServerConfig{
             if (vals == "0") useHTTPS = false;
             else useHTTPS = true;
         }
+        valc = getenv("UTOPIA_TLS_CERT");
+        vals = valc;
+        pathToCertFile = vals;
+
+        valc = getenv("UTOPIA_TLS_KEY");
+        vals = valc;
+        pathToKeyFile = vals; 
         return true;
     }
 
