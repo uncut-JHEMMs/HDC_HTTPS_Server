@@ -30,6 +30,8 @@
 struct ServerConfig{
     //start with supporting these options, add more later
     unsigned short portNumber;
+    //maximum number of concurrent connections to accept
+    unsigned int maxConnections;
     unsigned int threadPoolSize;
     //prevent the client from attempting to start a server with a ridiculuous
     //number of threads
@@ -41,10 +43,11 @@ struct ServerConfig{
     //whether or not to support ipv6
     //bool dual_stack;
     //whether or not the server should block this thread
-    //bool blocks
+    //bool blocks;
     //https needs these
     std::string pathToKeyFile;
     std::string pathToCertFile;
+    //connection timeout;
     
 
     /*A reasonable number of threads is a coefficient of the available number
@@ -85,11 +88,19 @@ struct ServerConfig{
                     else if (key == "UTOPIA_TPS"){
                         if (!isValidNumber(value)) return 2;
                         threadPoolSize = stoi(value);
+                        //if we don't have at least 4 cores, turn off threadpool
+                        if (std::thread::hardware_concurrency() <= 4){
+                            threadPoolSize = 1;
+                        }
                     }
                     else if (key == "UTOPIA_CONNECTIONS"){
                         if (!isValidNumber(value)) return 2;
-                        maxConnectionsPerIP = stoi(value);
+                        maxConnections = stoi(value);
                     }
+                    else if (key == "UTOPIA_IP_CON_CONNECTIONS"){
+                        if (!isValidNumber(value)) return 2;
+                        maxConnectionsPerIP = stoi(value);
+                    }   
                     else if (key == "UTOPIA_TLS"){
                         if (!isValidNumber(value)) return 2;
                         if (value == "0") useHTTPS = false;
@@ -122,10 +133,8 @@ struct ServerConfig{
             return false;
         }
         //get all the lines
-        std::vector<std::string> args;
         std::string line;
         while (getline(file, line)){
-            //args.push_back(line);
             //look at the return values of each line to determine valid config?
             parseConfigLine(line);
         }
@@ -146,6 +155,11 @@ struct ServerConfig{
             threadPoolSize = stoi(vals);
         }
         valc = getenv("UTOPIA_CONNECTIONS");
+        vals = valc; 
+        if (isValidNumber(vals)){
+            maxConnections = stoi(vals);
+        }
+        valc = getenv("UTOPIA_IP_CON_CONNECTIONS");
         vals = valc; 
         if (isValidNumber(vals)){
             maxConnectionsPerIP = stoi(vals);
@@ -169,6 +183,7 @@ struct ServerConfig{
     //default constructor assigns blank values
     ServerConfig(){
         portNumber = 0;
+        maxConnections = 0;
         threadPoolSize = 0;
         reasonableThreadMax = 0;
         maxConnectionsPerIP = 0;
