@@ -46,11 +46,13 @@ void printUsage()
 int buildServer(httpserver::create_webserver& cw, ServerConfig& sc){
     //port number is required
     cw = httpserver::create_webserver(sc.portNumber);
-    //threadpoolsize
-    cw.max_connections(sc.threadPoolSize);
-    //max connections
+    //Max concurrent Connections
+    cw.max_connections(sc.maxConnections);
+    //max connections per IP
     cw.per_IP_connection_limit(sc.maxConnectionsPerIP);
-    //https stuff later
+    //thread pool size, start method of internal select is the default, so it isn't totally necessary to specify that
+    cw.max_threads(sc.threadPoolSize);
+    //https stuff, it's either all or none
     if (sc.useHTTPS){
         cw.use_ssl();
         cw.https_mem_key(sc.pathToKeyFile);
@@ -59,8 +61,11 @@ int buildServer(httpserver::create_webserver& cw, ServerConfig& sc){
     else {
         cw.no_ssl();
     }
-    //need to add connection timeout
-    //need to add dual stack/ipv6
+
+
+    // connection timeout
+    // dual stack/ipv6
+    // blocking
     return 0;
 }
 int main(int argc, char **argv)
