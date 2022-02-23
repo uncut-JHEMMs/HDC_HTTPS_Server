@@ -1,0 +1,3 @@
+Access logged
+Access logged
+Quit signal received. Shutting down

@@ -3,7 +3,7 @@ OBJS = main.o
 CC = g++
 CFLAGS = -Wall -Werror -std=c++17 -I/usr/local/include -I/usr/local/include/httpserver -I/usr/include/p11-kit-1 -L/usr/local/lib
 DEBUGFLAGS = -ggdb 
-LIBFLAGS = -lhttpserver -lmicrohttpd 
+LIBFLAGS = -lhttpserver -lmicrohttpd -pthread
 DEPS = serverStartup.hpp
 
 %.o: %.cpp $(DEPS)

@@ -6,28 +6,26 @@
 #include <iostream>
 #include <httpserver.hpp>
 #include "ServerConfig.hpp"
+#include "Endpoints.hpp"
+#include "Logger.hpp"
 #include <fstream>
 #include <cassert>
+#include <csignal>
 
-//use this for testing
-class hello_world_resource : public httpserver::http_resource {
- public:
-     const std::shared_ptr<httpserver::http_response> render(const httpserver::http_request&);
-     void set_some_data(const std::string &s) {data = s;}
-     std::string data;
-};
+//global logger so everyone can see it
+Logger logger("logfile.txt");
 
-// Using the render method you are able to catch each type of request you receive
-const std::shared_ptr<httpserver::http_response> hello_world_resource::render(const httpserver::http_request& req) {
-    // It is possible to store data inside the resource object that can be altered through the requests
-    std::cout << "Data was: " << data << std::endl;
-    std::string datapar = req.get_arg("data");
-    set_some_data(datapar == "" ? "no data passed!!!" : datapar);
-    std::cout << "Now data is:" << data << std::endl;
-
-    // It is possible to send a response initializing an http_string_response that reads the content to send in response from a string.
-    return std::shared_ptr<httpserver::http_response>(new httpserver::string_response("Hello World!!!", 200));
-}
+//forward declaration
+void custom_access_log(const std::string& url);
+//signal handler to allow logfile to close properly
+void signalHandler( int signum ) {
+   std::cout << "Interrupt signal (" << signum << ") received.\n";
+   // cleanup and close up stuff here  
+   logger.quit();
+   // join the logging thread(later)  
+   //loggingThread.join();
+   exit(signum);  
+} 
 
 /* Print a message if the program was invoked incorrectly. This behavior does
  * not get logged anywhere
@@ -46,6 +44,13 @@ void printUsage()
 int buildServer(httpserver::create_webserver& cw, ServerConfig& sc){
     //port number is required
     cw = httpserver::create_webserver(sc.portNumber);
+    /*
+       digest authentication is required, but doc says it's implied. There is
+       no change in behavior if we add it, so we can just let it be implied and
+       build all the endpoints as digest resources.
+    
+    cw.digest_auth();
+    */
     //Max concurrent Connections
     cw.max_connections(sc.maxConnections);
     //max connections per IP
@@ -61,13 +66,28 @@ int buildServer(httpserver::create_webserver& cw, ServerConfig& sc){
     else {
         cw.no_ssl();
     }
+    //timeout
+    cw.connection_timeout(sc.connectionTimeout);
+    //logfile test
+    cw.log_access(custom_access_log);
 
-
-    // connection timeout
+    //digest authentication is implicitly true, just need to have digest endpoints
     // dual stack/ipv6
-    // blocking
+    if (sc.dualStack) cw.use_dual_stack();
+    else cw.no_dual_stack();
+    //hardcode use ipv6 here for testing
+    //cw.use_ipv6();
+    // blocking is handled in main as the argument to webserver::start
     return 0;
 }
+
+
+//also define the access logger function that gets passed to the server's log_access method
+void custom_access_log(const std::string& url) {
+    std::string message = "Access logged";
+    logger.postMessage(message);
+}
+
 int main(int argc, char **argv)
 {
     /* If we have one arg, it's an input file. If there are no additional args,
@@ -91,16 +111,20 @@ int main(int argc, char **argv)
         printUsage();
         return 1;
     }
+    //register signal handler with process
+    signal(SIGINT, signalHandler); 
     // here we use the starter to build the webserver_create
     httpserver::create_webserver cw;
     buildServer(cw, sc);
     httpserver::webserver ws(cw);
-      //forgot to add the resources down here
+    //forgot to add the resources down here
     hello_world_resource hwr;
     ws.register_resource("/hello", &hwr, true);
-    // here we run the server, just have it block for now
-    ws.start(true);
-  
 
+    //digest part, can we mix digest and non-digest?
+    digest_resource dr;
+    ws.register_resource("/digest",&dr, true);
+    // here we run the server, just have it block for now. Having it not block makes it seem like it doesn't run
+    ws.start(sc.doesBlock);
     return 0;
 }

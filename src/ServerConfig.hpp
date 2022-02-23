@@ -38,16 +38,19 @@ struct ServerConfig{
     unsigned int reasonableThreadMax;//this may be premature optimization, leave this alone for now
     unsigned int maxConnectionsPerIP;
     //need connection timeout
+    unsigned int connectionTimeout;
     //https
     bool useHTTPS;
-    //whether or not to support ipv6
-    //bool dual_stack;
+    //whether or not to support ipv6 in addition to ipv6, I don't think
+    //ipv6 alone is ever a good idea
+    bool dualStack;
     //whether or not the server should block this thread
-    //bool blocks;
+    bool doesBlock;
     //https needs these
     std::string pathToKeyFile;
     std::string pathToCertFile;
-    //connection timeout;
+    //log file
+    //std::ostream log?
     
 
     /*A reasonable number of threads is a coefficient of the available number
@@ -84,6 +87,20 @@ struct ServerConfig{
                     if (key == "UTOPIA_PORT"){
                         if (!isValidNumber(value)) return 2; //bad value code
                         portNumber = stoi(value);
+                    }
+                    else if (key == "UTOPIA_TIMEOUT"){
+                        if (!isValidNumber(value)) return 2;
+                        connectionTimeout = stoi(value);
+                    }
+                    else if (key == "UTOPIA_BLOCK"){ //it turns out we probably never want to use this
+                        if (!isValidNumber(value)) return 2;
+                        if (value == "0") doesBlock = false;
+                        else doesBlock = true;
+                    }
+                    else if (key == "UTOPIA_DUAL_STACK"){
+                        if (!isValidNumber(value)) return 2;
+                        if (value == "0") dualStack = false;
+                        else dualStack = true;
                     }
                     else if (key == "UTOPIA_TPS"){
                         if (!isValidNumber(value)) return 2;
@@ -149,6 +166,23 @@ struct ServerConfig{
         if (isValidNumber(vals)){
             portNumber = stoi(vals);
         }
+        valc = getenv("UTOPIA_TIMEOUT");
+        vals = valc;
+        if (isValidNumber(vals)){
+            connectionTimeout = stoi(vals);
+        }
+        valc = getenv("UTOPIA_BLOCK");
+        vals = valc;
+        if (isValidNumber(vals)){
+            if (vals == "0") doesBlock = false;
+            else doesBlock = true;
+        }
+        valc = getenv("UTOPIA_DUAL_STACK");
+        vals = valc;
+        if (isValidNumber(vals)){
+            if (vals == "0") dualStack = false;
+            else dualStack = true;
+        }
         valc = getenv("UTOPIA_TPS");
         vals = valc;
         if (isValidNumber(vals)){
@@ -170,6 +204,7 @@ struct ServerConfig{
             if (vals == "0") useHTTPS = false;
             else useHTTPS = true;
         }
+        //strings at the bottom here
         valc = getenv("UTOPIA_TLS_CERT");
         vals = valc;
         pathToCertFile = vals;
@@ -183,6 +218,9 @@ struct ServerConfig{
     //default constructor assigns blank values
     ServerConfig(){
         portNumber = 0;
+        doesBlock = true;
+        dualStack = true;
+        connectionTimeout = 0;
         maxConnections = 0;
         threadPoolSize = 0;
         reasonableThreadMax = 0;
