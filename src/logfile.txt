@@ -1,3 +1,5 @@
+Server building from environment variables
+Server configured and starting up
 Access logged
 Access logged
-Quit signal received. Shutting down
+Interrupt signal received, shutting down.

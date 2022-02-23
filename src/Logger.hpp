@@ -43,8 +43,8 @@ struct Logger{
     void postMessage(std::string& message){
       queueGuard.lock();
       messageQueue.push_back(message);
-      sem_post(&queueSize);
       queueGuard.unlock();
+      sem_post(&queueSize);
     }
 
     //write all the messages in the queue to the file and exit, used when we're quitting
@@ -55,8 +55,8 @@ struct Logger{
         outStream << messageQueue[i] <<std::endl;
       }
       queueGuard.unlock();
-      //log a quit message
-      outStream << "Quit signal received. Shutting down" <<std::endl;
+      //log a quit message. This is done in the signal handler currently
+      //outStream << "Quit signal received. Shutting down" <<std::endl;
       //close the file so stuff is saved.
       outStream.close();
     }
@@ -67,6 +67,7 @@ struct Logger{
         sem_wait(&queueSize);
         if(quitFlag){
           quit();
+          break;
         }
         else{
           writeMessage();

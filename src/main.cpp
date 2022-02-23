@@ -14,16 +14,17 @@
 
 //global logger so everyone can see it
 Logger logger("logfile.txt");
+std::thread logThread;
 
 //forward declaration
 void custom_access_log(const std::string& url);
 //signal handler to allow logfile to close properly
 void signalHandler( int signum ) {
-   std::cout << "Interrupt signal (" << signum << ") received.\n";
+   logger.quitFlag = true;
+   std::string quitMessage("Interrupt signal received, shutting down.");
+   logger.postMessage(quitMessage);
    // cleanup and close up stuff here  
-   logger.quit();
-   // join the logging thread(later)  
-   //loggingThread.join();
+   logThread.join();
    exit(signum);  
 } 
 
@@ -75,8 +76,6 @@ int buildServer(httpserver::create_webserver& cw, ServerConfig& sc){
     // dual stack/ipv6
     if (sc.dualStack) cw.use_dual_stack();
     else cw.no_dual_stack();
-    //hardcode use ipv6 here for testing
-    //cw.use_ipv6();
     // blocking is handled in main as the argument to webserver::start
     return 0;
 }
@@ -94,16 +93,17 @@ int main(int argc, char **argv)
      * then we check the environment variables
      */
     ServerConfig sc;
+    std::string configMessage;
     if (argc == 2)
     {
         // parse the config file, do the easy known good one to make sure server runs
-        std::cout << "Parse from config file" << std::endl;
+        configMessage = "Server building from config file";
         sc.populateFromConfigFile(argv[1]);
     }
     else if (argc == 1)
     {
         // get the environment variables
-        std::cout << "Check the environment variables" << std::endl;
+        configMessage = "Server building from environment variables";
         sc.populateFromEnv();
     }
     else
@@ -111,16 +111,21 @@ int main(int argc, char **argv)
         printUsage();
         return 1;
     }
+    //start logging messages
+    logger.postMessage(configMessage);
     //register signal handler with process
     signal(SIGINT, signalHandler); 
+    //start log thread
+    logThread = std::thread(&Logger::threadFunc,&logger);
     // here we use the starter to build the webserver_create
     httpserver::create_webserver cw;
     buildServer(cw, sc);
     httpserver::webserver ws(cw);
+    std::string startMessage("Server configured and starting up");
+    logger.postMessage(startMessage);
     //forgot to add the resources down here
     hello_world_resource hwr;
     ws.register_resource("/hello", &hwr, true);
-
     //digest part, can we mix digest and non-digest?
     digest_resource dr;
     ws.register_resource("/digest",&dr, true);
