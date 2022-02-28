@@ -4,6 +4,7 @@
 #set Env variables in the shell that's running the tests
 unset UTOPIA_PORT
 unset UTOPIA_TIMEOUT
+unset UTOPIA_DUAL_STACK
 unset UTOPIA_BLOCK
 unset UTOPIA_TPS
 unset UTOPIA_CONNECTIONS

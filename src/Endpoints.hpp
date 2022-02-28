@@ -16,7 +16,7 @@ class hello_world_resource : public httpserver::http_resource {
                  return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, reload_nonce));
              }
          }
-         return std::shared_ptr<httpserver::string_response>(new httpserver::string_response("You did it", 200, "text/plain"));
+         return std::shared_ptr<httpserver::string_response>(new httpserver::string_response("Hello page", 200, "text/plain"));
      }
      //for HW example to get data passed in the url
      //void set_some_data(const std::string &s) {data = s;}
@@ -48,6 +48,6 @@ class digest_resource : public httpserver::http_resource {
                  return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, reload_nonce));
              }
          }
-         return std::shared_ptr<httpserver::string_response>(new httpserver::string_response("SUCCESS", 200, "text/plain"));
+         return std::shared_ptr<httpserver::string_response>(new httpserver::string_response("Digest success page", 200, "text/plain"));
      }
 };

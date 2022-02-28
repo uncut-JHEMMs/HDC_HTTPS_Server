@@ -26,6 +26,9 @@ int main(int argc, char** argv){
     assert(ss.maxConnectionsPerIP == 4);
     //assert(ss.reasonableThreadMax == 80); Look at this later
     assert(ss.useHTTPS == true);
+
+    //need tests for the logger down here
+    
     return 0;
 }
 

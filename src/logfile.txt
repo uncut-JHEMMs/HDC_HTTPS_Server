@@ -1,5 +1,12 @@
-Server building from environment variables
+Server building from config file
 Server configured and starting up
+Access logged
+Access logged
+Access logged
+Access logged
+Access logged
+Access logged
+Access logged
 Access logged
 Access logged
 Interrupt signal received, shutting down.
