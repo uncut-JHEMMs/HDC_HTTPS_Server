@@ -4,9 +4,3 @@ Access logged
 Access logged
 Access logged
 Access logged
-Access logged
-Access logged
-Access logged
-Access logged
-Access logged
-Interrupt signal received, shutting down.
