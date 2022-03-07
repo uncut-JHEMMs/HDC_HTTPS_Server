@@ -1,5 +1,5 @@
 #ifndef SERVERSTARTER_HPP
-#define SERVERSTARTEr_HPP
+#define SERVERSTARTER_HPP
 /*
  * This file holds the definitions to types and functions related to starting
  * a libhttpserver with customized behavior

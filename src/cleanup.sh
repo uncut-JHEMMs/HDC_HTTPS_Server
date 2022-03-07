@@ -1,7 +1,9 @@
 #!/bin/bash
 #cleans up the results of running the benchmark
-rm  responses.txt
+rm  *.txt
+rm callgrind.out*
+rm massif.out*
+rm *.png
 rm -rf InitInfo
-rm -rf PerfData
-rm -rf ValgrindOutput
-
+rm -rf PerformanceData
+rm -rf ValgrindData
