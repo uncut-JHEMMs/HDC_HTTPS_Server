@@ -1,10 +1,11 @@
 #!/bin/bash
-#This runs everything else: sets up the dirs, starts monitoring, sends requests, cleans up
+#the purpose of this script is to run the benchmark while the server is under callgrind, rather than on its' own, and produce
+#the output
 #####################DIR/FILE SETUP#######################################################
 ./InitInfo.sh
 ###########################STRART SERVER############################################
 #start the server
-./serverStart serverconfig.cfg &
+valgrind --tool-callgrind ./serverStart serverconfig.cfg &
 SERVERPID=$(ps | awk '$4 == "serverStart"{print $1}')
 ##########################START MONITORS#############################################
 ./apmgather.sh &
@@ -20,16 +21,13 @@ sleep 1s
 COUNTER=0
 while [ $COUNTER -le 1000 ]
 do
-	COUNTER=$((COUNTER + 1))
-	curl -k -i --digest --user myuser:mypass https://localhost:8080/hello > responses.txt
+        COUNTER=$((COUNTER + 1))
+        curl -k -i --digest --user myuser:mypass https://localhost:8080/hello > responses.txt
 done
 #curl -k -i --digest --user myuser:mypass https://localhost:8080/hello > responses.txt
-#NOTE FOR LATER: We can check the output from grep by either using -c (check the number of matches, which can be 0), or by using $? to get the actual return value for grep (0 for at least one match, non-zero for no matches)
-#can also just do "if OUTPUT=$(command | grep pattern); then..."
+#NOTE FOR LATER: We can check the output from grep by either using -c (check the number of matches, which can be 0), or by using $? to get the actual return value for grep >#can also just do "if OUTPUT=$(command | grep pattern); then..."
 
 #kill and cleanup
 kill $SERVERPID
 kill $APMGATHERPID
 #./cleanup.sh
-#create the graphs
-./createGraphs.sh
