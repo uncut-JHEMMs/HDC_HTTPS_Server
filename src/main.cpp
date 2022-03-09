@@ -130,6 +130,11 @@ int main(int argc, char **argv)
     digest_resource dr;
     ws.register_resource("/digest",&dr, true);
     // here we run the server, just have it block for now. Having it not block makes it seem like it doesn't run
-    ws.start(sc.doesBlock);
+    image_resource ir;
+    ws.register_resource("/image",&ir, true);
+    latency_resource lr;
+    ws.register_resource("/latency",&lr, true);
+
+ws.start(sc.doesBlock);
     return 0;
 }

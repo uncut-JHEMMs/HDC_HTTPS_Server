@@ -1,9 +1,13 @@
 #!/bin/bash
 #cleans up the results of running the benchmark
+rm 'device name'
 rm  *.txt
 rm callgrind.out*
 rm massif.out*
-rm *.png
-rm -rf InitInfo
-rm -rf PerformanceData
-rm -rf ValgrindData
+rm cpuU*
+rm response*
+rm massif.out*
+rm callgrind.out*
+rm InitInfo/*
+rm PerformanceData/*
+rm ValgrindData/*
