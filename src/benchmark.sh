@@ -26,7 +26,6 @@ echo "Running server in uninstrumented mode to gather APM data"
 echo "Sending $REQUESTCOUNT Requests"
 while [ $COUNTER -le $REQUESTCOUNT ]
 do
-
 	sleep 0.125
 	res=$((COUNTER%4))
 	if [ $res -eq 0 ]
@@ -35,12 +34,12 @@ do
 		echo 200 > response.txt
 	elif [ $res -eq 1 ]
 	then 
-		curl -k -i https://localhost:8080/hello |  awk 'NR == 1{print $2}' > response.txt
+		curl -k -i https://localhost:8080/hello | awk 'NR == 1{print $2}' > response.txt
 	elif [ $res -eq 2 ]
 	then
-		curl -k -i https://localhost:8080/digest |  awk 'NR == 1{print $2}' > response.txt
+		curl -k -i https://localhost:8080/digest | awk 'NR == 1{print $2}' > response.txt
 	else
-		curl -k -i https://localhost:8080/nothing |  awk 'NR == 1{print $2}' > response.txt
+		curl -k -i https://localhost:8080/nothing | awk 'NR == 1{print $2}' > response.txt
 	fi
 	#get the response code using awk and store it in a variable
 	RESPCODE=$(awk '{print $1}' response.txt)
@@ -84,3 +83,5 @@ kill $APMGATHERPID
 #./cleanup.sh
 #create the graphs
 ./createGraphs.sh 
+
+exit 0

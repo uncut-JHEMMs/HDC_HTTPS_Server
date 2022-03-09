@@ -135,6 +135,7 @@ int main(int argc, char **argv)
     latency_resource lr;
     ws.register_resource("/latency",&lr, true);
 
-ws.start(sc.doesBlock);
+    ws.start(true); // was sc.doesBlock
+
     return 0;
 }
