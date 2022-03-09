@@ -20,6 +20,8 @@ echo "adding init info..."
 cd $INITINFODIR
 cat /proc/cpuinfo > $CPUIFILENAME
 cat /proc/meminfo > $MEMIFILENAME
+#add the server configuration as well
+cp ../serverconfig.cfg .
 cd ..
 exit
 

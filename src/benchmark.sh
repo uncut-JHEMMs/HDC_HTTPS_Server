@@ -18,10 +18,10 @@ sleep 1s
 
 #what we really want to do is pipe the responses into awk, then look at the status code and increment a counter for the response codes
 COUNTER=0
-while [ $COUNTER -le 1000 ]
+while [ $COUNTER -le 100 ]
 do
 	COUNTER=$((COUNTER + 1))
-	curl -k -i --digest --user myuser:mypass https://localhost:8080/hello > responses.txt
+	curl -k -i --digest --user myuser:mypass https://localhost:8080/digest >> response.txt
 done
 #curl -k -i --digest --user myuser:mypass https://localhost:8080/hello > responses.txt
 #NOTE FOR LATER: We can check the output from grep by either using -c (check the number of matches, which can be 0), or by using $? to get the actual return value for grep (0 for at least one match, non-zero for no matches)
