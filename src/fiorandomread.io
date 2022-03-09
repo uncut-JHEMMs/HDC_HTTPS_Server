@@ -9,7 +9,7 @@ runtime=5
 numjobs=4
 name=raw-randread
 rw=randread
-size=5m
+size=100m
 							
 [job1]
 filename=device name

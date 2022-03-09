@@ -11,11 +11,6 @@ IFTOPFN=iftop.txt
 #fio outputs, this doesn't go in apmgather
 FIOJOBFILE=fiorandomread.io
 FIOOUTFN=$INITINFODIR/fiooutput.txt
-#make the directories
-#echo "creating directories..."
-#mkdir $INITINFODIR
-#mkdir $VALGRINDDIR
-#mkdir $PERFDIR
 
 #put the initial info files in place
 echo "adding init info..."
@@ -27,7 +22,7 @@ cat /proc/meminfo > $MEMIFILENAME
 #add the server configuration as well
 cp ../serverconfig.cfg .
 cd ..
-exit
+exit 0
 
 
 

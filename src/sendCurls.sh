@@ -3,7 +3,7 @@
 #of massif and callgrind, which can't be run in the background
 HOSTNAME=https://localhost:8080
 ENDPOINT=hello
-REQUESTS=100
+REQUESTS=50
 OUTFILE=response.txt
 echo "Sending $REQUESTS Requests"
 COUNTER=0

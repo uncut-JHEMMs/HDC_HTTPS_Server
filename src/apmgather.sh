@@ -42,31 +42,23 @@ DATAPOINTS=0
 while [ $DATAPOINTS -ge 0 ]
 do
 	sleep 0.5
+
 	#free data
 	free > $FREEDATAFN
 	#put current memory numbers into their files
 	awk 'NR==2{print $4}' < $FREEDATAFN >> $FREEMEMFN
 	awk 'NR==3{print $4}' < $FREEDATAFN >> $FREESWAPFN
-	#free | awk 'NR==2{print $4}' >> $FREEMEMFN
-	#free | awk 'NR==3{print $4}' >> $FREESWAPFN
-	
+
 	#top data
 	top -b -n 1 > $TOPDATAFN
 	awk '$12 == "serverStart"{print $9}'  < $TOPDATAFN >> $PERCCPUFN
 	awk '$12 == "serverStart"{print $10}' < $TOPDATAFN >> $PERCMEMFN
-	#$top -b -n 1 | awk '$12 == "serverStart"{print $9}' >> $PERCCPUFN
-	#top -b -n 1 | awk '$12 == "serverStart"{print $10}' >> $PERCMEMFN
 
-	#iotop data
 	iotop -b -n 1 -P > $IOTOPDATAFN
 	awk '$12 =="./serverStart"{print $4}'   < $IOTOPDATAFN >> $DISKREADFN
 	awk '$12 =="./serverStart"{print $6}'   < $IOTOPDATAFN >> $DISKWRITEFN
 	awk '$12 =="./serverStart"{print $8}'   < $IOTOPDATAFN >> $DISKSWAPFN
 	awk '$12 == "./serverStart"{print $10}' < $IOTOPDATAFN >> $PERCIOFN
-	#iotop -b -n 1 -P | awk '$12 =="./serverStart"{print $4}' >> $DISKREADFN
-	#iotop -b -n 1 -P | awk '$12 =="./serverStart"{print $6}' >> $DISKWRITEFN
-	#iotop -b -n 1 -P | awk '$12 =="./serverStart"{print $8}' >> $DISKSWAPFN
-	#iotop -b -n 1 -P | awk '$12 == "./serverStart"{print $10}' >> $PERCIOFN
 
 	#fio data and iftop data are in initinfo, they only get run once
 
@@ -82,4 +74,4 @@ do
 	awk  'NR==3{print $6}' < $VMSTATDATAFN >> $VMSTATMEMCACHEFN
 
 done
-exit
+exit 0
