@@ -10,6 +10,7 @@
 
 class hello_world_resource : public httpserver::http_resource {
      const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) {
+        /*
          if (req.get_digested_user() == "") {
              return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, true));
          } else {
@@ -18,6 +19,7 @@ class hello_world_resource : public httpserver::http_resource {
                  return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, reload_nonce));
              }
          }
+         */
          return std::shared_ptr<httpserver::string_response>(new httpserver::string_response("Hello World", 200, "text/plain"));
      }
      //for HW example to get data passed in the url
@@ -46,7 +48,6 @@ const std::shared_ptr<httpserver::http_response> hello_world_resource::render(co
 class digest_resource : public httpserver::http_resource {
  public:
      const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000)); 
 	if (req.get_digested_user() == "") {
              return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, true));
          } else {
@@ -62,17 +63,6 @@ class digest_resource : public httpserver::http_resource {
 class image_resource : public httpserver::http_resource {
  public:
      const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) {
-         std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	if (req.get_digested_user() == "") {
-             return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", 
-             "test@example.com", MY_OPAQUE, true));
-         } else {
-             bool reload_nonce = false;
-             if (!req.check_digest_auth("test@example.com", "mypass", 300, &reload_nonce)) {
-                 return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com",
-			 MY_OPAQUE, reload_nonce));
-	     }
-	 }
          return std::shared_ptr<httpserver::file_response>(new httpserver::file_response("shop.png", 200, "text/plain"));
      }
 };
@@ -80,29 +70,19 @@ class image_resource : public httpserver::http_resource {
 class latency_resource : public httpserver::http_resource {
  public:
 	const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) {
-         if (req.get_digested_user() == "") {
-             return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL",
-		"test@example.com", MY_OPAQUE, true));
-	 } else {
-             bool reload_nonce = false;
-             if (!req.check_digest_auth("test@example.com", "mypass", 300, &reload_nonce)) {
-                 return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", 
-		    "test@example.com", MY_OPAQUE, reload_nonce));
-             }
-         }
 	//calculate the time
 	std::string stamp = req.get_arg("time");
 	std::stringstream stream(stamp);
 	long long istamp = 0, diff = 0;
 	stream >> istamp;
-	std::cout << "istamp is " << istamp<<std::endl;
+	//std::cout << "istamp is " << istamp<<std::endl;
 	//get the current time
 	auto s1 = std::chrono::system_clock::now();
 	auto s1_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(s1);
 	auto epoch = s1_ms.time_since_epoch();
 	long long timeval = epoch.count();
 	diff = timeval - istamp;
-	std::cout<<"difference between "<<timeval<< " and "<< istamp << " is " << diff << std::endl;
+	//std::cout<<"difference between "<<timeval<< " and "<< istamp << " is " << diff << std::endl;
 	//turn it back into a string
 	stream = std::stringstream();
 	stream << diff;

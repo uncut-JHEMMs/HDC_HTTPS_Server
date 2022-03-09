@@ -1,33 +1,8 @@
 #!/bin/bash
-#the purpose of this script is to run the benchmark while the server is under callgrind, rather than on its' own, and produce
-#the output
-#####################DIR/FILE SETUP#######################################################
-./InitInfo.sh
-###########################STRART SERVER############################################
-#start the server
-valgrind --tool-callgrind ./serverStart serverconfig.cfg &
-SERVERPID=$(ps | awk '$4 == "serverStart"{print $1}')
-##########################START MONITORS#############################################
-./apmgather.sh &
-APMGATHERPID=$(ps | awk '$4 == "apmgather.sh"{print $1}')
-#########################LOAD SERVER#################################################
-#wait for a bit for server to start
-sleep 1s
-#curl some packets at it
-#note that when we do "> responses.txt", the response is actually what gets put in the file, the result of the GET request, NOT any of the ouput from  curl. In order to
-#check that, we'd need to run awk on it or something?
-
-#what we really want to do is pipe the responses into awk, then look at the status code and increment a counter for the response codes
-COUNTER=0
-while [ $COUNTER -le 1000 ]
-do
-        COUNTER=$((COUNTER + 1))
-        curl -k -i --digest --user myuser:mypass https://localhost:8080/hello > responses.txt
-done
-#curl -k -i --digest --user myuser:mypass https://localhost:8080/hello > responses.txt
-#NOTE FOR LATER: We can check the output from grep by either using -c (check the number of matches, which can be 0), or by using $? to get the actual return value for grep >#can also just do "if OUTPUT=$(command | grep pattern); then..."
-
-#kill and cleanup
-kill $SERVERPID
-kill $APMGATHERPID
-#./cleanup.sh
+#this script runs the server under callgrind, which can't be done in the background
+CALLGRINDOUTFN=callgrind_raw
+PRETTYCGFN=prettycallgrind.txt
+echo "Running server under callgrind for heap profile data"
+valgrind --tool=callgrind --callgrind-out-file=$CALLGRINDOUTFN ./serverStart serverconfig.cfg 
+mv $CALLGRINDOUTFN ValgrindData
+callgrind_annotate --tree=both ValgrindData/$CALLGRINDOUTFN > ValgrindData/$PRETTYCGFN

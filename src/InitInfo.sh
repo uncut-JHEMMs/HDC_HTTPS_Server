@@ -7,16 +7,20 @@ PERFDIR=PerformanceData
 CPUIFILENAME=cpuinfo.txt
 MEMIFILENAME=meminfo.txt
 
-FREEFILENAME=free.txt
-TOPFILENAME=topdata.txt
+IFTOPFN=iftop.txt
+#fio outputs, this doesn't go in apmgather
+FIOJOBFILE=fiorandomread.io
+FIOOUTFN=$INITINFODIR/fiooutput.txt
 #make the directories
-echo "creating directories..."
-mkdir $INITINFODIR
-mkdir $VALGRINDDIR
-mkdir $PERFDIR
+#echo "creating directories..."
+#mkdir $INITINFODIR
+#mkdir $VALGRINDDIR
+#mkdir $PERFDIR
 
 #put the initial info files in place
 echo "adding init info..."
+echo "running fio job, this takes a couple seconds..."
+fio $FIOJOBFILE > $FIOOUTFN
 cd $INITINFODIR
 cat /proc/cpuinfo > $CPUIFILENAME
 cat /proc/meminfo > $MEMIFILENAME
