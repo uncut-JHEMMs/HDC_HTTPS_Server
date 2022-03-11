@@ -1,0 +1,96 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 2 (0x2)
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=US, O=SSTrain AS, OU=SSTrain Docsign Certificate Authority, CN=SSTrain Docsign CA
+        Validity
+            Not Before: Feb  9 14:43:49 2022 GMT
+            Not After : Feb  9 14:43:49 2024 GMT
+        Subject: C=US, O=SSTrain AS, CN=Test One
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:bb:a4:0a:df:03:62:15:97:6f:37:d8:88:0a:a3:
+                    aa:fe:34:51:18:9c:ec:0a:ca:21:b2:de:de:18:4f:
+                    c4:59:32:9b:81:84:da:09:55:da:ba:22:4b:b4:dc:
+                    dd:65:fc:5b:ff:2f:0b:72:4c:df:d9:97:b0:1b:85:
+                    e8:b4:2e:51:55:d9:d0:49:96:8e:d5:a0:cf:34:ac:
+                    65:49:82:e8:93:6b:95:f9:0b:aa:08:20:0d:0e:b1:
+                    9d:24:b5:60:ca:c6:cf:86:11:45:45:b2:e4:e5:ad:
+                    0c:3d:98:da:fb:6a:d5:7b:2b:39:6f:e2:80:4f:86:
+                    f7:31:a8:91:9b:a1:63:9b:1d:b6:5e:5d:31:9d:67:
+                    df:1b:9d:42:96:be:9b:23:b0:fb:75:f1:00:a4:85:
+                    61:f0:7d:71:bb:b5:7a:51:4a:d5:a7:39:aa:e6:04:
+                    af:da:99:12:d4:6a:fa:30:5d:5b:0f:5c:ad:90:2b:
+                    d8:35:80:a0:34:aa:a3:2f:93:25:e6:19:1c:43:16:
+                    d2:b3:0c:d4:b1:11:99:be:46:be:5f:04:6a:b7:70:
+                    2b:5f:62:7c:70:88:ad:42:c6:a6:f8:ca:1a:68:95:
+                    6d:25:7b:24:d6:cf:ee:66:3d:d9:d9:c7:f9:a6:8c:
+                    23:d8:14:30:d4:d1:5a:f8:2d:2c:f1:ea:21:f2:e0:
+                    32:71
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Key Usage: critical
+                Digital Signature, Key Encipherment, CRL Sign
+            X509v3 Basic Constraints: 
+                CA:TRUE
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication, Any Extended Key Usage
+            X509v3 Subject Key Identifier: 
+                B3:BF:44:3F:0C:42:43:0A:D9:1D:E5:5F:1D:12:3A:7C:A6:C0:3F:F8
+            X509v3 Authority Key Identifier: 
+                keyid:9A:14:19:20:AE:7B:7F:BE:68:8B:AF:B1:EA:71:2A:9B:B3:6D:DD:50
+
+            Authority Information Access: 
+                CA Issuers - URI:http://sstrain.com/ca/docsign-ca.cer
+
+            X509v3 CRL Distribution Points: 
+
+                Full Name:
+                  URI:http://sstrain.com/ca/docsign-ca.crl
+
+            X509v3 Subject Alternative Name: 
+                email:testone@gmail.com
+    Signature Algorithm: sha1WithRSAEncryption
+         96:ee:b0:9e:ea:78:c2:91:96:57:0d:76:47:a7:05:09:e3:dc:
+         56:2b:18:bb:22:1e:a9:cc:b1:36:99:e1:5f:7d:8f:d7:12:02:
+         f4:5b:50:9d:e1:11:ce:fd:bf:ec:7f:9e:af:a0:3e:fa:2e:e3:
+         e5:88:18:2f:0c:4f:f5:e7:14:cc:3c:c3:23:89:55:af:15:d7:
+         b4:c3:a9:16:b3:00:4d:68:d8:b1:c0:58:93:59:04:a1:1f:15:
+         c0:63:e2:8d:60:ef:5b:7b:67:5f:5c:cb:3d:d1:5d:a6:fe:78:
+         5d:4a:e7:c4:5c:f9:9b:1c:31:15:e7:8f:d7:6d:37:74:73:1d:
+         e8:2b:48:8e:66:68:83:13:1c:e2:3a:2f:22:ea:40:37:b6:b4:
+         98:60:53:04:18:86:d9:55:6e:3f:9e:9c:c7:7c:2c:df:d4:f5:
+         02:10:98:b9:e9:58:92:94:67:3a:43:47:8e:0f:f4:18:f7:fc:
+         6b:0f:d2:56:6c:9c:1e:39:50:f9:35:87:9b:3f:fb:81:74:18:
+         79:3f:8c:65:8c:bb:07:8e:87:be:65:d4:c6:e9:41:c6:ab:31:
+         21:1d:2c:b0:8c:ed:97:f4:8c:c6:69:6a:25:1b:2f:3d:14:73:
+         14:fd:18:0a:d8:0c:ca:57:e1:5a:9b:42:87:e9:19:84:5b:1a:
+         1a:0a:1d:a3
+-----BEGIN CERTIFICATE-----
+MIIENTCCAx2gAwIBAgIBAjANBgkqhkiG9w0BAQUFADBvMQswCQYDVQQGEwJVUzET
+MBEGA1UECgwKU1NUcmFpbiBBUzEuMCwGA1UECwwlU1NUcmFpbiBEb2NzaWduIENl
+cnRpZmljYXRlIEF1dGhvcml0eTEbMBkGA1UEAwwSU1NUcmFpbiBEb2NzaWduIENB
+MB4XDTIyMDIwOTE0NDM0OVoXDTI0MDIwOTE0NDM0OVowNTELMAkGA1UEBhMCVVMx
+EzARBgNVBAoMClNTVHJhaW4gQVMxETAPBgNVBAMMCFRlc3QgT25lMIIBIjANBgkq
+hkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu6QK3wNiFZdvN9iICqOq/jRRGJzsCsoh
+st7eGE/EWTKbgYTaCVXauiJLtNzdZfxb/y8Lckzf2ZewG4XotC5RVdnQSZaO1aDP
+NKxlSYLok2uV+QuqCCANDrGdJLVgysbPhhFFRbLk5a0MPZja+2rVeys5b+KAT4b3
+MaiRm6Fjmx22Xl0xnWffG51Clr6bI7D7dfEApIVh8H1xu7V6UUrVpzmq5gSv2pkS
+1Gr6MF1bD1ytkCvYNYCgNKqjL5Ml5hkcQxbSswzUsRGZvka+XwRqt3ArX2J8cIit
+Qsam+MoaaJVtJXsk1s/uZj3Z2cf5powj2BQw1NFa+C0s8eoh8uAycQIDAQABo4IB
+FDCCARAwDgYDVR0PAQH/BAQDAgGiMAwGA1UdEwQFMAMBAf8wGQYDVR0lBBIwEAYI
+KwYBBQUHAwIGBFUdJQAwHQYDVR0OBBYEFLO/RD8MQkMK2R3lXx0SOnymwD/4MB8G
+A1UdIwQYMBaAFJoUGSCue3++aIuvsepxKpuzbd1QMEAGCCsGAQUFBwEBBDQwMjAw
+BggrBgEFBQcwAoYkaHR0cDovL3NzdHJhaW4uY29tL2NhL2RvY3NpZ24tY2EuY2Vy
+MDUGA1UdHwQuMCwwKqAooCaGJGh0dHA6Ly9zc3RyYWluLmNvbS9jYS9kb2NzaWdu
+LWNhLmNybDAcBgNVHREEFTATgRF0ZXN0b25lQGdtYWlsLmNvbTANBgkqhkiG9w0B
+AQUFAAOCAQEAlu6wnup4wpGWVw12R6cFCePcVisYuyIeqcyxNpnhX32P1xIC9FtQ
+neERzv2/7H+er6A++i7j5YgYLwxP9ecUzDzDI4lVrxXXtMOpFrMATWjYscBYk1kE
+oR8VwGPijWDvW3tnX1zLPdFdpv54XUrnxFz5mxwxFeeP1203dHMd6CtIjmZogxMc
+4jovIupAN7a0mGBTBBiG2VVuP56cx3ws39T1AhCYuelYkpRnOkNHjg/0GPf8aw/S
+VmycHjlQ+TWHmz/7gXQYeT+MZYy7B46HvmXUxulBxqsxIR0ssIztl/SMxmlqJRsv
+PRRzFP0YCtgMylfhWptCh+kZhFsaGgodow==
+-----END CERTIFICATE-----
