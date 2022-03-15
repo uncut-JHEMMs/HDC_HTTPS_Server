@@ -56,14 +56,14 @@ class digest_resource : public httpserver::http_resource {
                  return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, reload_nonce));
              }
          }
-         return std::shared_ptr<httpserver::file_response>(new httpserver::file_response("test_file", 200, "text/plain"));
+         return std::shared_ptr<httpserver::file_response>(new httpserver::file_response("digest.txt.html", 200, "text/html"));
      }
 };
 
 class image_resource : public httpserver::http_resource {
  public:
      const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) {
-         return std::shared_ptr<httpserver::file_response>(new httpserver::file_response("shop.png", 200, "text/plain"));
+         return std::shared_ptr<httpserver::file_response>(new httpserver::file_response("SSLogo.png", 200, "text/plain"));
      }
 };
 
