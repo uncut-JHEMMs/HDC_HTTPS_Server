@@ -9,7 +9,7 @@
 #include <regex> //isNumber
 #include <string>
 #include <cstdlib>
-#include <sstream> //parse line
+#include <sstream> //parse line, toString
 #include <vector>
 #include <httpserver.hpp>
 
@@ -20,7 +20,13 @@
 #define portKey "UTOPIA_PORT"
 #define TPSizeKey "UTOPIA_TPS"
 #define maxConnectKey "UTOPIA_CONNECTIONS"
+#define ipConsKey "UTOPIA_IP_CON_CONNECTIONS"
 #define tlsKey "UTOPIA_TLS"
+#define timeoutKey "UTOPIA_TIMEOUT"
+#define blockKey "UTOPIA_BLOCK"
+#define dsKey "UTOPIA_DUAL_STACK"
+#define tlsCert "UTOPIA_TLS_CERT"
+#define tlsCertKey "UTOPIA_TLS_KEY"
 
 /*
  * A ServerStarter contains fields that correspond to the startup options that
@@ -49,9 +55,6 @@ struct ServerConfig{
     //https needs these
     std::string pathToKeyFile;
     std::string pathToCertFile;
-    //log file
-    //std::ostream log?
-    
 
     /*A reasonable number of threads is a coefficient of the available number
      * of physical threads. Remember that other stuff will probably be running
@@ -74,6 +77,13 @@ struct ServerConfig{
         }
         return true;
     }
+
+    //need an array of boolean key tags and an array of numerical key tags
+
+    //need a method that processes a numerical key-value
+
+    //need a method that processes a boolean key-value 
+
     //parse an input line by looking at the key and then the value, and 
     //assign a member of the serverStarter appropritately
     int parseConfigLine(std::string& line){
@@ -84,25 +94,30 @@ struct ServerConfig{
         if (std::getline(streamLine, key, '=')){
             //assign the members
             if (std::getline(streamLine,value)){
-                    if (key == "UTOPIA_PORT"){
+                    //port key
+                    if (key == portKey){
                         if (!isValidNumber(value)) return 2; //bad value code
                         portNumber = stoi(value);
+                        if (!isPortValid(portNumber)) return 2;
                     }
-                    else if (key == "UTOPIA_TIMEOUT"){
-                        if (!isValidNumber(value)) return 2;
-                        connectionTimeout = stoi(value);
-                    }
-                    else if (key == "UTOPIA_BLOCK"){ //it turns out we probably never want to use this
+                    //boolean keys
+                    else if (key == blockKey){ //it turns out we probably never want to use this
                         if (!isValidNumber(value)) return 2;
                         if (value == "0") doesBlock = false;
                         else doesBlock = true;
                     }
-                    else if (key == "UTOPIA_DUAL_STACK"){
+                    else if (key == dsKey){
                         if (!isValidNumber(value)) return 2;
                         if (value == "0") dualStack = false;
                         else dualStack = true;
                     }
-                    else if (key == "UTOPIA_TPS"){
+                    else if (key == tlsKey){
+                        if (!isValidNumber(value)) return 2;
+                        if (value == "0") useHTTPS = false;
+                        else useHTTPS = true;
+                    }
+                    //numerical keys
+                    else if (key == TPSizeKey){
                         if (!isValidNumber(value)) return 2;
                         threadPoolSize = stoi(value);
                         //if we don't have at least 4 cores, turn off threadpool
@@ -110,23 +125,23 @@ struct ServerConfig{
                             threadPoolSize = 1;
                         }
                     }
-                    else if (key == "UTOPIA_CONNECTIONS"){
+                    else if (key == timeoutKey){
+                        if (!isValidNumber(value)) return 2;
+                        connectionTimeout = stoi(value);
+                    }
+                    else if (key == maxConnectKey){
                         if (!isValidNumber(value)) return 2;
                         maxConnections = stoi(value);
                     }
-                    else if (key == "UTOPIA_IP_CON_CONNECTIONS"){
+                    else if (key == ipConsKey){
                         if (!isValidNumber(value)) return 2;
                         maxConnectionsPerIP = stoi(value);
                     }   
-                    else if (key == "UTOPIA_TLS"){
-                        if (!isValidNumber(value)) return 2;
-                        if (value == "0") useHTTPS = false;
-                        else useHTTPS = true;
-                    }
-                    else if (key == "UTOPIA_TLS_CERT"){
+                    //I let linux or openssl take care of issues with key not found or invalid cert/key type
+                    else if (key == tlsCert){
                         pathToCertFile = value;
                     }
-                    else if (key == "UTOPIA_TLS_KEY"){
+                    else if (key == tlsCertKey){
                         pathToKeyFile = value;
                     }
                     //some unrecognized key, so just return a code. Can also use this to do comments.
@@ -151,68 +166,111 @@ struct ServerConfig{
         }
         //get all the lines
         std::string line;
+	    int res;
         while (getline(file, line)){
             //look at the return values of each line to determine valid config?
-            parseConfigLine(line);
+		    res = parseConfigLine(line);
+		    if (res != 0){
+                if (res == 1){
+                    std::cout<< "Bad formatting of config file with config line: " << line << std::endl;
+                }
+                else if (res == 2){
+                    std::cout << "Config value isn't a valid value with line: " << line << std::endl;
+                }
+                else if (res == 3){
+                    std::cout << "Unrecognized setting in config file with line: " << line << std::endl;
+                }
+                return false;
+            }
         }
         return true;
     }
 
+
+    //
     //populate the data members from environment variables. Use the names defined above in this file.
     bool populateFromEnv(){
+        //if any entry is invalid, we stop parsing, log the error and terminate
         //get each of the environment variables in the list
-        char* valc = getenv("UTOPIA_PORT");
+        char* valc = getenv(portKey);
         std::string vals(valc); 
         if (isValidNumber(vals)){
             portNumber = stoi(vals);
         }
-        valc = getenv("UTOPIA_TIMEOUT");
+        valc = getenv(timeoutKey);
         vals = valc;
         if (isValidNumber(vals)){
             connectionTimeout = stoi(vals);
         }
-        valc = getenv("UTOPIA_BLOCK");
+        valc = getenv(blockKey);
         vals = valc;
         if (isValidNumber(vals)){
             if (vals == "0") doesBlock = false;
             else doesBlock = true;
         }
-        valc = getenv("UTOPIA_DUAL_STACK");
+        valc = getenv(dsKey);
         vals = valc;
         if (isValidNumber(vals)){
             if (vals == "0") dualStack = false;
             else dualStack = true;
         }
-        valc = getenv("UTOPIA_TPS");
+        valc = getenv(TPSizeKey);
         vals = valc;
         if (isValidNumber(vals)){
             threadPoolSize = stoi(vals);
         }
-        valc = getenv("UTOPIA_CONNECTIONS");
+        valc = getenv(maxConnectKey);
         vals = valc; 
         if (isValidNumber(vals)){
             maxConnections = stoi(vals);
         }
-        valc = getenv("UTOPIA_IP_CON_CONNECTIONS");
+        valc = getenv(ipConsKey);
         vals = valc; 
         if (isValidNumber(vals)){
             maxConnectionsPerIP = stoi(vals);
         }
-        valc = getenv("UTOPIA_TLS");
+        valc = getenv(tlsKey);
         vals = valc; 
         if (isValidNumber(vals)){
             if (vals == "0") useHTTPS = false;
             else useHTTPS = true;
         }
         //strings at the bottom here
-        valc = getenv("UTOPIA_TLS_CERT");
+        valc = getenv(tlsCert);
         vals = valc;
         pathToCertFile = vals;
 
-        valc = getenv("UTOPIA_TLS_KEY");
+        valc = getenv(tlsCertKey);
         vals = valc;
         pathToKeyFile = vals; 
         return true;
+    }
+    /*
+        returns a string representation of the current config
+    */
+    std::string toString(){
+        std::stringstream stream;
+        stream << "Server configuration:" << std::endl;
+        //port number
+        stream << "Port Number: " << portNumber << std::endl;
+        //max connections
+        stream << "Maximum Concurrent Connections: " << maxConnections << std::endl;
+        //max connections per IP
+        stream << "Maximum Connections Per IP: " << maxConnectionsPerIP << std::endl;
+        //timeout
+        stream << "Timeout (in seconds): " << connectionTimeout << std::endl;
+        //tps
+        stream << "Threadpool size: " << threadPoolSize << std::endl;
+        //https
+        stream << "HTTPS: " << useHTTPS << std::endl;
+        //dual stack
+        stream << "Map IPv4 into IPv6: " << dualStack << std::endl;
+        //location of certificate
+        stream << "SSL Certificate: " << pathToCertFile << std::endl;
+        //location of key
+        stream << "SSL Key: " << pathToKeyFile;
+        std::string res = stream.str();
+        return res;
     }
 
     //default constructor assigns blank values
