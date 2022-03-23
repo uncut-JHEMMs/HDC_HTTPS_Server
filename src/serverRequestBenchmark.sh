@@ -25,4 +25,9 @@ kill -s 2 $SERVERPID
 #graph the data we got
 ./graphLatestStats.sh
 
+#archive the run
+mkdir -p HistoricalData
+cp serverStats.txt HistoricalData/$(date +"%Y-%m-%d")stats.txt
+cp LatestStats.png HistoricalData/$(date +"%Y-%m-%d").png
+cp serverconfig.cfg HistoricalData/$(date +"%Y-%m-%d")config.txt
 #do a bunch of shit that results in a gnuplot graph of requests per second
