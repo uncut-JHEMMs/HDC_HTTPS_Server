@@ -140,7 +140,7 @@ struct Logger{
       statsStream << reqPerSec <<"\t\t"<< okPerSec << "\t\t"<< nfPerSec << "\t\t" <<
         errorPerSec << "\t\t" << otherPerSec << "\t\t"<< respThrough << std::endl;
   }
-  
+
   /*
     Process any message (calls the other process methods, or report an error 
     message)
@@ -181,7 +181,7 @@ struct Logger{
  }
 
   /*
-    Process a type-2 message: increase the response throughput size by the 
+    Process a type-2 message: increase the response throughput size by the
     size of the response
   */
  void process2message(LogMessage& message){
@@ -214,7 +214,7 @@ struct Logger{
 
  //set the column names for the stats log file
  void nameStatColumns(){
-   statsStream<<"ReqPerSec\tOKPerSec\tNotFoundPerSec\tErrorPerSec\tOtherPerSec\tRespThrough"<<std::endl;
+   statsStream<<"ReqPerSec\tOKPerSec\tNotFoundPerSec\tErrorPerSec\tOtherPerSec\tResponseThroughPutBytes"<<std::endl;
  }
 
 };

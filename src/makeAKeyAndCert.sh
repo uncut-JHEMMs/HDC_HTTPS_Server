@@ -2,4 +2,4 @@
 #also need to generate a csr and crl for the first sprint
 openssl genrsa -out newkey.pem 4096
 
-openssl req -key newkey.pem -new -x509 -days 365 -out newcert.crt
+openssl req -nodes -key newkey.pem -new -x509 -days 365 -out newcert.crt

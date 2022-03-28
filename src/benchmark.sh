@@ -5,12 +5,12 @@
 ###########################STRART SERVER############################################
 #start the server in uninstrumented mode
 ./serverStart serverconfig.cfg &
-SERVERPID=$(pgrep serverStart)
+SERVERPID=$!
 #wait for a bit for server to start
 sleep 1s
 ##########################START MONITORS#############################################
 ./apmgather.sh &
-APMGATHERPID=$(pgrep apmgather.sh)
+APMGATHERPID=$!
 #########################LOAD SERVER#################################################
 REQUESTCOUNT=50
 #curl some packets at it
@@ -82,6 +82,8 @@ kill $APMGATHERPID
 
 #./cleanup.sh
 #create the graphs
-./createGraphs.sh 
+./createGraphs.sh
+
+#change the stuff in PerformanceInfo and InitInfo so everyone is not write-protected
 
 exit 0

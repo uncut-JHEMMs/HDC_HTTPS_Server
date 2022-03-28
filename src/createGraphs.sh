@@ -107,3 +107,6 @@ gnuplot -e "set terminal png size 600,400; set output '$GRAPHDIR/latency.png';
  set ylabel 'End-to-end delay (ms)';
  set yrange [0:100];
  plot 'PerformanceData/latResponse.txt' w lines"
+
+#make the images writable
+chmod 766 $GRAPHDIR/*.png
