@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     logThread = std::thread(&Logger::accessThread,&logger);
     statsThread = std::thread(&Logger::statsThread, &logger);
     std::string configString = sc.toString();
-    logger.postType0Message(message);
+    logger.postType0Message(configString);
     
     //register resources
     hello_world_resource hwr;

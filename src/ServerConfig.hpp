@@ -84,7 +84,7 @@ struct ServerConfig{
             populateMaxConnectFromConfig(fileName);
             populateTPSFromConfig(fileName);
             populateTimeoutFromConfig(fileName);
-
+	    //TODO: add the last 2 fields
             populateHTTPSFromConfig(fileName);
             populateTLSCertFromConfig(fileName);
             populateTLSKeyFromConfig(fileName);
@@ -98,7 +98,7 @@ struct ServerConfig{
     //just have methods for populate each, then a master that calls all
     bool populatePortFromConfig(std::string& configFile){
         //make a parser (abstract out)
-        std::unique_ptr<ConfigFileParser> fileParser = 
+        std::unique_ptr<ConfigFileParser> fileParser =
             std::make_unique<ConfigFileParser>(configFile);
         //have it get the value
         try{
@@ -109,7 +109,11 @@ struct ServerConfig{
         }
         catch(const char* c){
             throw("Error assigning port from config file. Check key and value.");
-            //return false;
+        }
+        //This is not working right now
+        const int limit = 65535;
+        if (portNumber > limit){
+            throw("Port Number is outside valid range. Must be below 65536");
         }
         return true;
         //unique pointer falls out of scope here

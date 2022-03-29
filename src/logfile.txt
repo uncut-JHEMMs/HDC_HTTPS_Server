@@ -1,10 +1,10 @@
-Tue Mar 29 12:24:33 2022
+Tue Mar 29 15:16:08 2022
 Server building from config file
 Server configuration:
 Port Number: 8080
 Maximum Concurrent Connections: 10
 Maximum Connections Per IP: 0
-Timeout (in seconds): 1
+Timeout (in seconds): 3
 Threadpool size: 10
 HTTPS: 1
 Map IPv4 into IPv6: 0

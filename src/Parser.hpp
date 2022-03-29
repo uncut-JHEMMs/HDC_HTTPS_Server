@@ -84,12 +84,18 @@ class ConfigFileParser: public Parser{
                     streamLine = std::istringstream(line);
                     //get the key
                     std::getline(streamLine, key, '=');
+                    if (key == ""){
+                        throw("Key is blank in config file");
+                    }
                     if (key != keyName){
                         continue;
                     }
                     else{
                         //this is the one we want, return it
                         std::getline(streamLine,value);
+                        if (value == ""){
+                            throw("Value is blank in config file");
+                        }
                         inFile.close();
                         return value;
                     }
@@ -105,6 +111,6 @@ class ConfigFileParser: public Parser{
 class EnvVarParser : public Parser{
     //needs the array of key names
     //then looks very similar to configFileParser
-}
+};
 
 #endif

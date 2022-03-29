@@ -24,8 +24,8 @@ struct Logger{
   std::queue<LogMessage> queue; /*they give us deque as a default container type, it's the second template arg*/
   sem_t queueSize;
   ServerStats stats;
-  std::mutex statsGuard; //this is for statistics, shared between the 
-  std::mutex queueGuard;
+  std::mutex statsGuard; //this is for statistics, shared between the endpoints
+  std::mutex queueGuard; //this is for the message queue
   bool quitFlag;
   std::ofstream statsStream;
   std::ofstream accessStream;
