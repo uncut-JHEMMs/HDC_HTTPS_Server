@@ -12,8 +12,9 @@
 #include <sstream> //parse line, toString
 #include <vector>
 #include <httpserver.hpp>
+#include "Parser.hpp"
 
-//used for finding reasonable thread limit
+//used for finding reasonable thread limit, arbitrary here, tune it later
 #define REASONABLE_COEFFICIENT 4
 //environment variable names
 //put all of these in a container so we can just iterate over all of them
@@ -38,10 +39,9 @@ struct ServerConfig{
     unsigned short portNumber;
     //maximum number of concurrent connections to accept
     unsigned int maxConnections;
+    //number of worker threads
     unsigned int threadPoolSize;
-    //prevent the client from attempting to start a server with a ridiculuous
-    //number of threads
-    unsigned int reasonableThreadMax;//this may be premature optimization, leave this alone for now
+    //max connections per unique IP
     unsigned int maxConnectionsPerIP;
     //need connection timeout
     unsigned int connectionTimeout;
@@ -55,6 +55,7 @@ struct ServerConfig{
     //https needs these
     std::string pathToKeyFile;
     std::string pathToCertFile;
+    //we need a parse member here
 
     /*A reasonable number of threads is a coefficient of the available number
      * of physical threads. Remember that other stuff will probably be running
@@ -64,130 +65,178 @@ struct ServerConfig{
         return REASONABLE_COEFFICIENT * std::thread::hardware_concurrency();
     }
 
+    bool isValidNumber(std::string input) const{
+        for (char c : input){
+            if (!std::isdigit(c)) return false;
+        }
+        return true;
+        }
     //check that the port number is valid, 1-65535
     bool isPortValid(unsigned int port){
         if (port> 0 && port < 65536) return true;
         return false;
     }
 
-    //check that a given input is a valid number (a positive integer)
-    bool isValidNumber(std::string input) const{
-        for (char c : input){
-            if (!std::isdigit(c)) return false;
+    //populate all members from config file
+    void populateAllFromConfigFile(std::string& fileName){
+        try{
+            populatePortFromConfig(fileName);
+            populateMaxConnectFromConfig(fileName);
+            populateTPSFromConfig(fileName);
+            populateTimeoutFromConfig(fileName);
+
+            populateHTTPSFromConfig(fileName);
+            populateTLSCertFromConfig(fileName);
+            populateTLSKeyFromConfig(fileName);
+        }
+        catch(const char* c){
+            //just propagate the error up
+            throw(c);
+        }
+    }
+
+    //just have methods for populate each, then a master that calls all
+    bool populatePortFromConfig(std::string& configFile){
+        //make a parser (abstract out)
+        std::unique_ptr<ConfigFileParser> fileParser = 
+            std::make_unique<ConfigFileParser>(configFile);
+        //have it get the value
+        try{
+            std::string val{portKey};
+            std::string sPort = fileParser->getValueFromKey(val);
+            //set the member
+            portNumber = fileParser->convertToUInt(sPort);
+        }
+        catch(const char* c){
+            throw("Error assigning port from config file. Check key and value.");
+            //return false;
         }
         return true;
+        //unique pointer falls out of scope here
     }
 
-    //need an array of boolean key tags and an array of numerical key tags
-
-    //need a method that processes a numerical key-value
-
-    //need a method that processes a boolean key-value 
-
-    //parse an input line by looking at the key and then the value, and 
-    //assign a member of the serverStarter appropritately
-    int parseConfigLine(std::string& line){
-        //make a string stream
-        std::istringstream streamLine(line);
-        std::string key, value;
-        //find the key and value. If bad format, return a bad format code
-        if (std::getline(streamLine, key, '=')){
-            //assign the members
-            if (std::getline(streamLine,value)){
-                    //port key
-                    if (key == portKey){
-                        if (!isValidNumber(value)) return 2; //bad value code
-                        portNumber = stoi(value);
-                        if (!isPortValid(portNumber)) return 2;
-                    }
-                    //boolean keys
-                    else if (key == blockKey){ //it turns out we probably never want to use this
-                        if (!isValidNumber(value)) return 2;
-                        if (value == "0") doesBlock = false;
-                        else doesBlock = true;
-                    }
-                    else if (key == dsKey){
-                        if (!isValidNumber(value)) return 2;
-                        if (value == "0") dualStack = false;
-                        else dualStack = true;
-                    }
-                    else if (key == tlsKey){
-                        if (!isValidNumber(value)) return 2;
-                        if (value == "0") useHTTPS = false;
-                        else useHTTPS = true;
-                    }
-                    //numerical keys
-                    else if (key == TPSizeKey){
-                        if (!isValidNumber(value)) return 2;
-                        threadPoolSize = stoi(value);
-                        //if we don't have at least 4 cores, turn off threadpool
-                        if (std::thread::hardware_concurrency() <= 4){
-                            threadPoolSize = 1;
-                        }
-                    }
-                    else if (key == timeoutKey){
-                        if (!isValidNumber(value)) return 2;
-                        connectionTimeout = stoi(value);
-                    }
-                    else if (key == maxConnectKey){
-                        if (!isValidNumber(value)) return 2;
-                        maxConnections = stoi(value);
-                    }
-                    else if (key == ipConsKey){
-                        if (!isValidNumber(value)) return 2;
-                        maxConnectionsPerIP = stoi(value);
-                    }   
-                    //I let linux or openssl take care of issues with key not found or invalid cert/key type
-                    else if (key == tlsCert){
-                        pathToCertFile = value;
-                    }
-                    else if (key == tlsCertKey){
-                        pathToKeyFile = value;
-                    }
-                    //some unrecognized key, so just return a code. Can also use this to do comments.
-                    else {
-                        return 3;
-                    }
-            }
-            else return 1;
+    //just have methods for populate each, then a master that calls all
+    bool populateMaxConnectFromConfig(std::string& configFile){
+        //make a parser (abstract out)
+        std::unique_ptr<ConfigFileParser> fileParser = 
+            std::make_unique<ConfigFileParser>(configFile);
+        //have it get the value
+        try{
+            std::string val{maxConnectKey};
+            std::string sMC = fileParser->getValueFromKey(val);
+            //set the member
+            maxConnections = fileParser->convertToUInt(sMC);
         }
-        else return 1; //1 indicates bad formatting of config line
-
-        return 0;
+        catch(const char* c){
+            throw("Error assigning max connections from config file. Check key and value.");
+            //return false;
+        }
+        return true;
+        //unique pointer falls out of scope here
     }
-    //populate the data members from the 
-    //int return to use syscalls?
-    bool populateFromConfigFile(const std::string& inputFile){
-        //open the config file (if we don't find it, return false)
-        std::ifstream file;
-        file.open(inputFile);
-        if (!file.is_open()){
+
+    //Threadpool size
+    bool populateTPSFromConfig(std::string& configFile){
+        //make a parser (abstract out)
+        std::unique_ptr<ConfigFileParser> fileParser = 
+            std::make_unique<ConfigFileParser>(configFile);
+        //have it get the value
+        try{
+            std::string val{TPSizeKey};
+            std::string sTPS = fileParser->getValueFromKey(val);
+            //set the member
+            threadPoolSize = fileParser->convertToUInt(sTPS);
+            if (threadPoolSize > getReasonableThreadMax()){
+                std::cout << "Your threadpool size is significantly higher than your machine's thread count. This is not recommended." << std::endl;
+            }
+        }
+        catch(const char* c){
+            throw("Error assigning TPS from config file. Check key and value.");
+
+        }
+        return true;
+        //unique pointer falls out of scope here
+    }
+
+    //timeout
+    bool populateTimeoutFromConfig(std::string& configFile){
+        //make a parser (abstract out)
+        std::unique_ptr<ConfigFileParser> fileParser = 
+            std::make_unique<ConfigFileParser>(configFile);
+        //have it get the value
+        try{
+            std::string val{timeoutKey};
+            std::string sTPS = fileParser->getValueFromKey(val);
+            //set the member
+            connectionTimeout = fileParser->convertToUInt(sTPS);
+        }
+        catch(const char* c){
+            throw("Error assigning timeout from config file. Check key and value.");
+
+        }
+        return true;
+        //unique pointer falls out of scope here
+    }
+
+    //use HTTPS
+    bool populateHTTPSFromConfig(std::string& configFile){
+        //make a parser (abstract out)
+        std::unique_ptr<ConfigFileParser> fileParser = 
+            std::make_unique<ConfigFileParser>(configFile);
+        //have it get the value
+        try{
+            std::string val{tlsKey};
+            std::string sHTTPS = fileParser->getValueFromKey(val);
+            //set the member
+            useHTTPS = fileParser->convertToBool(sHTTPS);
+        }
+        catch(const char* c){
+            throw("Error assigning TLS from config file. Check key and value.");
             return false;
         }
-        //get all the lines
-        std::string line;
-	    int res;
-        while (getline(file, line)){
-            //look at the return values of each line to determine valid config?
-		    res = parseConfigLine(line);
-		    if (res != 0){
-                if (res == 1){
-                    std::cout<< "Bad formatting of config file with config line: " << line << std::endl;
-                }
-                else if (res == 2){
-                    std::cout << "Config value isn't a valid value with line: " << line << std::endl;
-                }
-                else if (res == 3){
-                    std::cout << "Unrecognized setting in config file with line: " << line << std::endl;
-                }
-                return false;
-            }
-        }
         return true;
+        //unique pointer falls out of scope here
     }
 
+    //HTTPS cert
+    bool populateTLSCertFromConfig(std::string& configFile){
+        //make a parser (abstract out)
+        std::unique_ptr<ConfigFileParser> fileParser = 
+            std::make_unique<ConfigFileParser>(configFile);
+        //have it get the value
+        try{
+            std::string val{tlsCert};
+            //no conversion needed
+            pathToCertFile = fileParser->getValueFromKey(val);
+            
+        }
+        catch(const char* c){
+            throw("Error assigning cert from config file. Check key and value.");
+            return false;
+        }
+        return true;
+        //unique pointer falls out of scope here
+    }
+    
+    //HTTPS key
+    bool populateTLSKeyFromConfig(std::string& configFile){
+        //make a parser (abstract out)
+        std::unique_ptr<ConfigFileParser> fileParser = 
+            std::make_unique<ConfigFileParser>(configFile);
+        //have it get the value
+        try{
+            std::string val{tlsCertKey};
+            //no conversion needed
+            pathToKeyFile = fileParser->getValueFromKey(val);
+        }
+        catch(const char* c){
+            throw("Error assigning TLS Key from config file. Check key and value.");
+            return false;
+        }
+        return true;
+        //unique pointer falls out of scope here
+    }
 
-    //
     //populate the data members from environment variables. Use the names defined above in this file.
     bool populateFromEnv(){
         //if any entry is invalid, we stop parsing, log the error and terminate
@@ -281,7 +330,7 @@ struct ServerConfig{
         connectionTimeout = 0;
         maxConnections = 0;
         threadPoolSize = 0;
-        reasonableThreadMax = 0;
+        //reasonableThreadMax = 0;
         maxConnectionsPerIP = 0;
         useHTTPS = false;
 
@@ -289,7 +338,7 @@ struct ServerConfig{
     //parameterized constructor takes a string that reporesents the path to 
     //a configuration file
     ServerConfig(std::string pathToConfigFile){
-        populateFromConfigFile(pathToConfigFile);
+        populateAllFromConfigFile(pathToConfigFile);
     }
 
 

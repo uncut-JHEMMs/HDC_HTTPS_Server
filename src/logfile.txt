@@ -1,114 +1,13 @@
-Fri Mar 25 15:14:28 2022
+Tue Mar 29 12:24:33 2022
 Server building from config file
 Server configuration:
 Port Number: 8080
 Maximum Concurrent Connections: 10
-Maximum Connections Per IP: 10
+Maximum Connections Per IP: 0
 Timeout (in seconds): 1
-Threadpool size: 2
+Threadpool size: 10
 HTTPS: 1
 Map IPv4 into IPv6: 0
 SSL Certificate: ../PKI/certs/mycert.crt
 SSL Key: ../PKI/ca/mykey.pem
-Fri Mar 25 15:14:29 2022
-Access logged at /latency?time=1648235669251 METHOD: GET
-Fri Mar 25 15:14:29 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:29 2022
-Access logged at /digest METHOD: GET
-Fri Mar 25 15:14:29 2022
-Access logged at /nothing METHOD: GET
-Fri Mar 25 15:14:29 2022
-Access logged at /latency?time=1648235669847 METHOD: GET
-Fri Mar 25 15:14:30 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:30 2022
-Access logged at /digest METHOD: GET
-Fri Mar 25 15:14:30 2022
-Access logged at /nothing METHOD: GET
-Fri Mar 25 15:14:30 2022
-Access logged at /latency?time=1648235670443 METHOD: GET
-Fri Mar 25 15:14:30 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:30 2022
-Access logged at /digest METHOD: GET
-Fri Mar 25 15:14:30 2022
-Access logged at /nothing METHOD: GET
-Fri Mar 25 15:14:31 2022
-Access logged at /latency?time=1648235671040 METHOD: GET
-Fri Mar 25 15:14:31 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:31 2022
-Access logged at /digest METHOD: GET
-Fri Mar 25 15:14:31 2022
-Access logged at /nothing METHOD: GET
-Fri Mar 25 15:14:31 2022
-Access logged at /latency?time=1648235671635 METHOD: GET
-Fri Mar 25 15:14:31 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:31 2022
-Access logged at /digest METHOD: GET
-Fri Mar 25 15:14:32 2022
-Access logged at /nothing METHOD: GET
-Fri Mar 25 15:14:32 2022
-Access logged at /latency?time=1648235672251 METHOD: GET
-Fri Mar 25 15:14:32 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:32 2022
-Access logged at /digest METHOD: GET
-Fri Mar 25 15:14:32 2022
-Access logged at /nothing METHOD: GET
-Fri Mar 25 15:14:32 2022
-Access logged at /latency?time=1648235672846 METHOD: GET
-Fri Mar 25 15:14:33 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:33 2022
-Access logged at /digest METHOD: GET
-Fri Mar 25 15:14:33 2022
-Access logged at /nothing METHOD: GET
-Fri Mar 25 15:14:33 2022
-Access logged at /latency?time=1648235673443 METHOD: GET
-Fri Mar 25 15:14:33 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:33 2022
-Access logged at /digest METHOD: GET
-Fri Mar 25 15:14:33 2022
-Access logged at /nothing METHOD: GET
-Fri Mar 25 15:14:34 2022
-Access logged at /latency?time=1648235674043 METHOD: GET
-Fri Mar 25 15:14:34 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:34 2022
-Access logged at /digest METHOD: GET
-Fri Mar 25 15:14:34 2022
-Access logged at /nothing METHOD: GET
-Fri Mar 25 15:14:34 2022
-Access logged at /latency?time=1648235674638 METHOD: GET
-Fri Mar 25 15:14:34 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:34 2022
-Access logged at /digest METHOD: GET
-Fri Mar 25 15:14:35 2022
-Access logged at /nothing METHOD: GET
-Fri Mar 25 15:14:35 2022
-Access logged at /latency?time=1648235675236 METHOD: GET
-Fri Mar 25 15:14:35 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:35 2022
-Access logged at /digest METHOD: GET
-Fri Mar 25 15:14:35 2022
-Access logged at /nothing METHOD: GET
-Fri Mar 25 15:14:35 2022
-Access logged at /latency?time=1648235675831 METHOD: GET
-Fri Mar 25 15:14:35 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:36 2022
-Access logged at /digest METHOD: GET
-Fri Mar 25 15:14:36 2022
-Access logged at /nothing METHOD: GET
-Fri Mar 25 15:14:36 2022
-Access logged at /latency?time=1648235676426 METHOD: GET
-Fri Mar 25 15:14:36 2022
-Access logged at /hello METHOD: GET
-Fri Mar 25 15:14:36 2022
-Access logged at /digest METHOD: GET
+Interrupt signal received, shutting down.

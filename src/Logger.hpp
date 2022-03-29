@@ -63,6 +63,34 @@ struct Logger{
     sem_post(&queueSize);
   }
 
+  //post a type 0 messsage by providing the message text
+  void postType0Message(const std::string& messageText){
+    //make a new type 0 message
+    LogMessage message;
+    message.setMessageType(LogMessageType::NONACCESS);
+    message.setTextMessage(messageText);
+    postMessage(message);
+  }
+
+  //overload for c-string 
+  void postType0Message(const char* messageText){
+    LogMessage message;
+    std::string mText{messageText};
+    message.setTextMessage(mText);
+    message.setMessageType(LogMessageType::NONACCESS);
+    postMessage(message);
+  }
+
+  //post a type 0 message by providing the message text
+  void postType1Message(const std::string& messageText){
+    //set the URL text part
+    LogMessage message;
+    message.setMessageType(LogMessageType::REQUESTLOG);
+    message.setResponseCode(LogResponseCode::OK);
+    message.setTextMessage(messageText);
+    postMessage(message);
+  }
+
   /*
     process a message from the queue, which includes adjusting any stats and
     writing messages to files if necessary
