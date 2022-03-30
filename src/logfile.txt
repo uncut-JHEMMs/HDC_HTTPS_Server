@@ -1,0 +1,13 @@
+Wed Mar 30 18:01:30 2022
+Server building from environment variables
+Server configuration:
+Port Number: 8000
+Maximum Concurrent Connections: 15000
+Maximum Connections Per IP: 5
+Timeout (in seconds): 3
+Threadpool size: 20
+HTTPS: 0
+Map IPv4 into IPv6: 0
+SSL Certificate: ../PKI/certs/mycert.crt
+SSL Key: ../PKI/ca/mykey.pem
+Interrupt signal received, shutting down.

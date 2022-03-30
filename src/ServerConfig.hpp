@@ -24,7 +24,6 @@
 #define ipConsKey "UTOPIA_IP_CON_CONNECTIONS"
 #define tlsKey "UTOPIA_TLS"
 #define timeoutKey "UTOPIA_TIMEOUT"
-#define blockKey "UTOPIA_BLOCK"
 #define dsKey "UTOPIA_DUAL_STACK"
 #define tlsCert "UTOPIA_TLS_CERT"
 #define tlsCertKey "UTOPIA_TLS_KEY"
@@ -36,7 +35,7 @@
  */
 struct ServerConfig{
     //start with supporting these options, add more later
-    unsigned short portNumber;
+    unsigned int portNumber;
     //maximum number of concurrent connections to accept
     unsigned int maxConnections;
     //number of worker threads
@@ -84,10 +83,13 @@ struct ServerConfig{
             populateMaxConnectFromConfig(fileName);
             populateTPSFromConfig(fileName);
             populateTimeoutFromConfig(fileName);
-	    //TODO: add the last 2 fields
             populateHTTPSFromConfig(fileName);
             populateTLSCertFromConfig(fileName);
             populateTLSKeyFromConfig(fileName);
+            //TODO: Implement these
+            populateDSFromConfig(fileName);
+            populateIPConConnectionsFromConfig(fileName);
+            
         }
         catch(const char* c){
             //just propagate the error up
@@ -98,7 +100,7 @@ struct ServerConfig{
     //just have methods for populate each, then a master that calls all
     bool populatePortFromConfig(std::string& configFile){
         //make a parser (abstract out)
-        ConfigFileParser fileParser{configFile};
+        ConfigFileParser fileParser = ConfigFileParser{configFile};
         //have it get the value
         try{
             std::string val{portKey};
@@ -250,12 +252,6 @@ struct ServerConfig{
         vals = valc;
         if (isValidNumber(vals)){
             connectionTimeout = stoi(vals);
-        }
-        valc = getenv(blockKey);
-        vals = valc;
-        if (isValidNumber(vals)){
-            if (vals == "0") doesBlock = false;
-            else doesBlock = true;
         }
         valc = getenv(dsKey);
         vals = valc;

@@ -5,6 +5,8 @@
 #define PARSER_HPP
 #include <sstream>
 #include <fstream>
+#include <utility> //pair
+#include <list> //list
 
 /*
     Abstract base class with the common interface
@@ -13,8 +15,10 @@ class Parser{
     public:
         //use the key to get the value, subclasses concretize this
         virtual std::string getValueFromKey(const std::string& keyName) = 0;
+        //virtual 
+        std::list<std::pair<std::string, std::string>> keyVals;
         //check that a given input is a valid number (a positive integer)
-	bool isValidNumber(std::string input) const{
+	bool isValidNumber(const std::string& input) const{
             for (char c : input){
                 if (!std::isdigit(c)) return false;
             }
@@ -104,7 +108,8 @@ class ConfigFileParser: public Parser{
                 throw("Couldn't find key in file");
             }
         }
-        //error methods
+        
+
 };
 
 class EnvVarParser : public Parser{
