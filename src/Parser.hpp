@@ -11,11 +11,10 @@
 */
 class Parser{
     public:
-        //methods to get values of different types
-        virtual std::string getValueFromKey(const std::string& keyName)=0;
-        //convert the string value to a different type, or throw an exception
+        //use the key to get the value, subclasses concretize this
+        virtual std::string getValueFromKey(const std::string& keyName) = 0;
         //check that a given input is a valid number (a positive integer)
-        bool isValidNumber(std::string input) const{
+	bool isValidNumber(std::string input) const{
             for (char c : input){
                 if (!std::isdigit(c)) return false;
             }
@@ -49,7 +48,7 @@ class Parser{
         }
         virtual ~Parser(){
             //empty, need this for the unique_ptr for a virtual destructor
-        } 
+        }
 };
 
 /*
@@ -63,7 +62,7 @@ class ConfigFileParser: public Parser{
     public:
         //constructor takes a string filename and assigns the inFile object
         ConfigFileParser(std::string inFile): inFileName(inFile){
-            //empty?
+            //empty
         }
         virtual ~ConfigFileParser(){
             //empty

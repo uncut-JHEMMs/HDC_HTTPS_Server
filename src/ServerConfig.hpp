@@ -98,21 +98,19 @@ struct ServerConfig{
     //just have methods for populate each, then a master that calls all
     bool populatePortFromConfig(std::string& configFile){
         //make a parser (abstract out)
-        std::unique_ptr<ConfigFileParser> fileParser =
-            std::make_unique<ConfigFileParser>(configFile);
+        ConfigFileParser fileParser{configFile};
         //have it get the value
         try{
             std::string val{portKey};
-            std::string sPort = fileParser->getValueFromKey(val);
+            std::string sPort = fileParser.getValueFromKey(val);
             //set the member
-            portNumber = fileParser->convertToUInt(sPort);
+            portNumber = fileParser.convertToUInt(sPort);
         }
         catch(const char* c){
             throw("Error assigning port from config file. Check key and value.");
         }
         //This is not working right now
-        const int limit = 65535;
-        if (portNumber > limit){
+        if (!isPortValid(portNumber)){
             throw("Port Number is outside valid range. Must be below 65536");
         }
         return true;
@@ -156,7 +154,6 @@ struct ServerConfig{
         }
         catch(const char* c){
             throw("Error assigning TPS from config file. Check key and value.");
-
         }
         return true;
         //unique pointer falls out of scope here
@@ -212,7 +209,6 @@ struct ServerConfig{
             std::string val{tlsCert};
             //no conversion needed
             pathToCertFile = fileParser->getValueFromKey(val);
-            
         }
         catch(const char* c){
             throw("Error assigning cert from config file. Check key and value.");
