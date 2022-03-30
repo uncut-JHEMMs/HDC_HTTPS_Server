@@ -2,17 +2,3 @@ ReqPerSec	OKPerSec	NotFoundPerSec	ErrorPerSec	OtherPerSec	ResponseThroughPutByte
 0		0		0		0		0		0
 0		0		0		0		0		0
 0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0
-0		0		0		0		0		0

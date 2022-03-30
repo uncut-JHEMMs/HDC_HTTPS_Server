@@ -12,7 +12,7 @@
 class Parser{
     public:
         //methods to get values of different types
-        virtual std::string getValueFromKey(std::string& keyName)=0;
+        virtual std::string getValueFromKey(const std::string& keyName)=0;
         //convert the string value to a different type, or throw an exception
         //check that a given input is a valid number (a positive integer)
         bool isValidNumber(std::string input) const{
@@ -23,7 +23,7 @@ class Parser{
         }
 
         //convert a string value into an unsigned int
-        unsigned int convertToUInt(std::string& value){
+        unsigned int convertToUInt(const std::string& value){
             if (!isValidNumber(value)){
                 throw("Value in config file isn't a number");
             }
@@ -34,7 +34,7 @@ class Parser{
         }
 
         //convert a string value to a boolean
-        bool convertToBool(std::string& value){
+        bool convertToBool(const std::string& value){
             if (!isValidNumber(value)){
                 throw("Value in config file isn't a number");
             }
@@ -69,7 +69,7 @@ class ConfigFileParser: public Parser{
             //empty
         }
         //getting values from a config file
-        virtual std::string getValueFromKey(std::string& keyName){
+        virtual std::string getValueFromKey(const std::string& keyName){
             std::ifstream inFile;
             inFile.open(inFileName);
             if (!inFile.is_open()){

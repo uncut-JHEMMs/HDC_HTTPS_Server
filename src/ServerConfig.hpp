@@ -64,7 +64,7 @@ struct ServerConfig{
     unsigned int getReasonableThreadMax(){
         return REASONABLE_COEFFICIENT * std::thread::hardware_concurrency();
     }
-
+    //TODO: move these to parser only
     bool isValidNumber(std::string input) const{
         for (char c : input){
             if (!std::isdigit(c)) return false;
