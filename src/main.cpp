@@ -7,12 +7,17 @@
 
 int main(int argc, char **argv)
 {
+    //check the invocation
+    if (argc > 2){
+        printUsage();
+        return 1;
+    }
+
     /* If we have one arg, it's an input file. If there are no additional args,
      * then we check the environment variables
      */
     ServerConfig sc;
     std::string configMessage = getTimeStamp();
-    bool res;
     if (argc == 2)
     {
         // parse the config from the provided config file
@@ -23,22 +28,22 @@ int main(int argc, char **argv)
         }
         catch(const char* c){
             std::cout << c << std::endl;
-            exit(1);
+            exit(2);
         }
     }
     else if (argc == 1)
     {
         // attempt to parse the config from the environment variables
         configMessage += "Server building from environment variables";
-        res = sc.populateFromEnv();
-        if (!res) exit(1);
+        try{
+            sc.populateAllFromEnv();
+        }
+        catch(const char* c){
+            std::cout << c << std::endl;
+            exit(2);
+        }
     }
-    else
-    {
-        printUsage();
-        return 1;
-    }
-    
+
     //register signal handler with process
     signal(SIGINT, signalHandler);
     
@@ -51,6 +56,8 @@ int main(int argc, char **argv)
     logger.postType0Message(configMessage);
     logThread = std::thread(&Logger::accessThread,&logger);
     statsThread = std::thread(&Logger::statsThread, &logger);
+    
+    //log the run configuration
     std::string configString = sc.toString();
     logger.postType0Message(configString);
     

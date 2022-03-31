@@ -18,7 +18,7 @@ tests : test.o
 	$(CC) -o $@ $(CFLAGS) $(LIBFLAGS) $(DEBUGFLAGS) test.o
 
 explicit:
-	clang++ -o serverStart -g -O0 -Wall -Werror -std=c++17 -I/usr/local/include -I/usr/local/include/httpserver -I/usr/include/p11-kit-1 -L/usr/local/lib -lhttpserver -lmicrohttpd -pthread main.cpp
+	clang++ -o serverStart -g -O0 -Wall -Werror -std=c++17 -I/usr/local/include -I/usr/local/include/httpserver -I/usr/include/p11-kit-1 -L/usr/local/lib -lhttpserver -lmicrohttpd -pthread *.cpp
 .PHONY: clean
 
 clean:
