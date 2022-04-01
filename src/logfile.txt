@@ -1,0 +1,64 @@
+Thu Mar 31 17:23:07 2022
+Server building from config file
+Server configuration:
+Port Number: 8080
+Maximum Concurrent Connections: 10
+Maximum Connections Per IP: 11
+Timeout (in seconds): 5
+Threadpool size: 20
+HTTPS: 1
+Map IPv4 into IPv6: 1
+SSL Certificate: ../PKI/certs/mycert.crt
+SSL Key: ../PKI/ca/mykey.pem
+Thu Mar 31 17:23:09 2022
+Access logged at /latency?time=1648761788923 METHOD: GET
+Thu Mar 31 17:23:09 2022
+Access logged at /hello METHOD: GET
+Thu Mar 31 17:23:09 2022
+Access logged at /digest METHOD: GET
+Thu Mar 31 17:23:09 2022
+Access logged at /nothing METHOD: GET
+Thu Mar 31 17:23:09 2022
+Access logged at /latency?time=1648761789711 METHOD: GET
+Thu Mar 31 17:23:09 2022
+Access logged at /hello METHOD: GET
+Thu Mar 31 17:23:10 2022
+Access logged at /digest METHOD: GET
+Thu Mar 31 17:23:10 2022
+Access logged at /nothing METHOD: GET
+Thu Mar 31 17:23:10 2022
+Access logged at /latency?time=1648761790309 METHOD: GET
+Thu Mar 31 17:23:10 2022
+Access logged at /hello METHOD: GET
+Thu Mar 31 17:23:10 2022
+Access logged at /digest METHOD: GET
+Thu Mar 31 17:23:10 2022
+Access logged at /nothing METHOD: GET
+Thu Mar 31 17:23:10 2022
+Access logged at /latency?time=1648761790904 METHOD: GET
+Thu Mar 31 17:23:11 2022
+Access logged at /hello METHOD: GET
+Thu Mar 31 17:23:11 2022
+Access logged at /digest METHOD: GET
+Thu Mar 31 17:23:11 2022
+Access logged at /nothing METHOD: GET
+Thu Mar 31 17:23:11 2022
+Access logged at /latency?time=1648761791500 METHOD: GET
+Thu Mar 31 17:23:11 2022
+Access logged at /hello METHOD: GET
+Thu Mar 31 17:23:11 2022
+Access logged at /digest METHOD: GET
+Thu Mar 31 17:23:11 2022
+Access logged at /nothing METHOD: GET
+Thu Mar 31 17:23:12 2022
+Access logged at /latency?time=1648761792096 METHOD: GET
+Thu Mar 31 17:23:12 2022
+Access logged at /hello METHOD: GET
+Thu Mar 31 17:23:12 2022
+Access logged at /digest METHOD: GET
+Thu Mar 31 17:23:12 2022
+Access logged at /nothing METHOD: GET
+Thu Mar 31 17:23:12 2022
+Access logged at /latency?time=1648761792691 METHOD: GET
+Thu Mar 31 17:23:12 2022
+Access logged at /hello METHOD: GET

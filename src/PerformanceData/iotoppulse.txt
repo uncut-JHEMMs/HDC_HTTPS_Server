@@ -1,0 +1,18 @@
+Total DISK READ:         0.00 B/s | Total DISK WRITE:         0.00 B/s
+Current DISK READ:       0.00 B/s | Current DISK WRITE:       0.00 B/s
+  PID  PRIO  USER     DISK READ  DISK WRITE  SWAPIN      IO    COMMAND
+    1 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % init
+  150 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % init
+  151 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % init
+  152 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % docker-desktop-proxy --distro-name Ubuntu-20.04 --docker-desktop-root /mnt/wsl/docker-desktop
+  167 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % init
+  168 be/4 rick        0.00 B/s    0.00 B/s  0.00 %  0.00 % docker serve --address unix:///home/rick/.docker/run/docker-cli-api.sock
+ 5492 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % init
+ 5493 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % init
+ 5494 be/4 rick        0.00 B/s    0.00 B/s  0.00 %  0.00 % -bash
+ 6046 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % sudo ./benchmark.sh
+ 6047 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % bash ./benchmark.sh
+ 6058 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % ./serverStart serverconfig.cfg
+ 6082 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % bash ./apmgather.sh
+ 6331 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % sleep 0.125
+ 6334 be/4 root        0.00 B/s    0.00 B/s  0.00 %  0.00 % python3 /usr/sbin/iotop -b -n 1 -P
