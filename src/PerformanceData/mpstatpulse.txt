@@ -1,4 +1,0 @@
-Linux 5.4.72-microsoft-standard-WSL2 (DESKTOP-SE1HQ90) 	03/31/22 	_x86_64_	(20 CPU)
-
-17:23:12     CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
-17:23:12     all    0.04    0.00    0.03    0.13    0.00    0.00    0.00    0.00    0.00   99.80

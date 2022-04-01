@@ -1,4 +1,0 @@
-0 200-OK 14
-1 401-Unauthorized 6
-2 404 6
-3 Other 0
