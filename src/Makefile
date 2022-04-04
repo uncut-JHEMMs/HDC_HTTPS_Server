@@ -1,25 +1,28 @@
 TARGET = serverStart
-OBJS = main.o
-CC = clang++
-CFLAGS = -Wall -Werror -std=c++17 -I/usr/local/include -I/usr/local/include/httpserver -I/usr/include/p11-kit-1 -L/usr/local/lib
-DEBUGFLAGS = -g 
-LIBFLAGS = -lhttpserver -lmicrohttpd -pthread
-DEPS = serverStartup.hpp serverStats.hpp Endpoints.hpp
+DEBUGTARGET = debug
+OBJS = ServerConfig.o Logger.o Parser.o main.o tinyxml2.o
+CC=clang++
+CFLAGS=-Wall -Werror -std=c++17 `pkg-config --cflags --libs libhttpserver` -I.
+#The above HAS to be the tildes, the $() expansion for pkg-config command doesn't work
+DEBUGFLAGS = -g
+LIBFLAGS = -pthread
 
+DEPS =  Parser.hpp Logger.hpp ServerStart.hpp ServerStats.hpp tinyxml2.h
+
+#the $@ means "the thing on the left of the rule", while $^ is "the thing on the right of the rule"
 %.o: %.cpp $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -c -o $@ $< $(DEBUGFLAGS)
 
 $(TARGET) : $(OBJS)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBFLAGS)
-debug : $(OBJS)
-	$(CC) -o debug $(CFLAGS) $(LIBFLAGS) $(DEBUGFLAGS) main.o
+
+$(DEBUGTARGET) : $(OBJS)
+	$(CC) -o $@ $^ $(CFLAGS) $(LIBFLAGS) $(DEBUGFLAGS)
 
 tests : test.o
-	$(CC) -o $@ $(CFLAGS) $(LIBFLAGS) $(DEBUGFLAGS) test.o
+	$(CC) -o $@ $(CFLAGS) $(LIBFLAGS) $(DEBUGFLAGS)
 
-explicit:
-	clang++ -o serverStart -g -O0 -Wall -Werror -std=c++17 -I/usr/local/include -I/usr/local/include/httpserver -I/usr/include/p11-kit-1 -L/usr/local/lib -lhttpserver -lmicrohttpd -pthread *.cpp
 .PHONY: clean
 
 clean:
-	rm -r *.o $(TARGET) $(DEBUGTARGET) tests
+	rm -rf *.o $(TARGET) $(DEBUGTARGET)
