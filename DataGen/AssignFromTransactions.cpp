@@ -44,15 +44,15 @@ bool writeUsersToXML(std::vector<std::unique_ptr<UserRecord>>& vec){
     tinyxml2::XMLNode* userNode = doc.NewElement("User");
     pRoot->InsertFirstChild(userNode);
     //id
-    pElement = doc.NewElement("User ID");
+    pElement = doc.NewElement("UserID");
     pElement->SetText(uptr->getUserID());
     userNode->InsertEndChild(pElement);
     //first name
-    pElement = doc.NewElement("First Name");
+    pElement = doc.NewElement("FirstName");
     pElement->SetText(uptr->getFirstName().c_str());
     userNode->InsertEndChild(pElement);
     //last name
-    pElement = doc.NewElement("Last Name");
+    pElement = doc.NewElement("LastName");
     pElement->SetText(uptr->getLastName().c_str());
     userNode->InsertEndChild(pElement);
     //email

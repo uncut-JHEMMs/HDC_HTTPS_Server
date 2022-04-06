@@ -70,6 +70,8 @@ int main(int argc, char **argv)
     ws.register_resource("/image",&ir, true);
     latency_resource lr;
     ws.register_resource("/latency",&lr, true);
+    docs_resource xmlr;
+    ws.register_resource("/xml", &xmlr, true);
     
     //run the server
     ws.start(true);
