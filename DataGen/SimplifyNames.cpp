@@ -8,50 +8,6 @@
 #include <vector>
 #include <memory>
 
-/*
-    User class, break it out into it's own file eventually
-*/
-class UserRecord{
-    private:
-        std::string firstName;
-        std::string lastName;
-        std::string emailAddress;
-        unsigned int userID;
-    public:
-
-    std::string getFirstName() const{
-        return firstName;
-    }
-
-    void setFirstName(const std::string& name){
-        firstName = name;
-    }
-
-    std::string getLastName() const{
-        return lastName;
-    }
-
-    void setLastName(const std::string& name){
-        lastName = name;
-    }
-    std::string getEmail() const{
-        return emailAddress;
-    }
-    
-    //this will be a little more complicated where we concatenate the names for the first part
-    void setEmail(const std::string& address){
-        emailAddress = address;
-    }
-
-    unsigned int getUserID() const{
-        return userID;
-    }
-
-    void setUserID(const unsigned int& id){
-        userID = id;
-    }
-    //need a comparator function for when we're sorting
-};
 
 int main(int argc, char* argv[]){
     //open the input file
