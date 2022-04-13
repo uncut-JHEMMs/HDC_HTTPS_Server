@@ -37,7 +37,37 @@ class hello_world_resource : public httpserver::http_resource {
         //return std::shared_ptr<httpserver::string_response>(new httpserver::string_response("Hello World", 200, "text/plain"));
      }
 };
+//servers the user documents
+class docs_resource : public httpserver::http_resource {
+public:
+//digest authentication part
+    const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) {
+	if (req.get_digested_user() == "") {
+            return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, true));
+         } else {
+            bool reload_nonce = false;
+            if (!req.check_digest_auth("test@example.com", "mypass", 300, &reload_nonce)) {
+                return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, reload_nonce));
+            }
+        }
+    //check the argument if it matches users or merchants and return the appropriate file
+    std::string arg = req.get_arg("type");
+    if (arg == "users"){
+        //return users
+        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response("xmlfiles/users.xml", 200, "text/plain"));
+    }
+    else if (arg == "merchants"){
+        //return merchants
+        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response("xmlfiles/merchants.xml", 200, "text/plain"));
+    }
+    else{
+        //return an error
+        return std::shared_ptr<httpserver::string_response>(new httpserver::string_response("FAIL", 500, "text/plain"));
+    }
+    //TODO: Get this endpoint to post stats
 
+    }
+};
 
 //all our endpoints should be a digest resource
 class digest_resource : public httpserver::http_resource {

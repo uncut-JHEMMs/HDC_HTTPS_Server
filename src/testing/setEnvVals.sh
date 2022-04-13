@@ -2,7 +2,6 @@
 #set Env variables in the shell that's running the tests
 UTOPIA_PORT=8000
 UTOPIA_TIMEOUT=3
-UTOPIA_BLOCK=1
 UTOPIA_DUAL_STACK=0
 UTOPIA_TPS=20
 UTOPIA_CONNECTIONS=15000

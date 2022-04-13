@@ -34,6 +34,8 @@ VMSTATMEMBUFFN=$APMFOLDER/vmstatmembuff.txt
 VMSTATMEMCACHEFN=$APMFOLDER/vmstatmemcache.txt
 
 #get the pid for the server
+#./serverStart serverconfig &
+#SERVERPID=$!
 SERVERPID=$(ps | awk '$4 == "serverStart"{print $1}')
 #echo $SERVERPID
 
@@ -73,5 +75,7 @@ do
 	awk  'NR==3{print $5}' < $VMSTATDATAFN >> $VMSTATMEMBUFFN
 	awk  'NR==3{print $6}' < $VMSTATDATAFN >> $VMSTATMEMCACHEFN
 
+
 done
+kill -s 2 $SERVERPID
 exit 0

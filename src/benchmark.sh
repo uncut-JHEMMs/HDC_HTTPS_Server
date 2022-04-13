@@ -5,14 +5,14 @@
 ###########################STRART SERVER############################################
 #start the server in uninstrumented mode
 ./serverStart serverconfig.cfg &
-SERVERPID=$(pgrep serverStart)
+SERVERPID=$!
 #wait for a bit for server to start
 sleep 1s
 ##########################START MONITORS#############################################
 ./apmgather.sh &
-APMGATHERPID=$(pgrep apmgather.sh)
+APMGATHERPID=$!
 #########################LOAD SERVER#################################################
-REQUESTCOUNT=50
+REQUESTCOUNT=25
 #curl some packets at it
 #note that when we do "> responses.txt", the response is actually what gets put in the file, the result of the GET request, NOT any of the ouput from  curl. In order to
 #check that, we'd need to run awk on it or something?
@@ -34,12 +34,12 @@ do
 		echo 200 > response.txt
 	elif [ $res -eq 1 ]
 	then 
-		curl -k -i https://localhost:8080/hello | awk 'NR == 1{print $2}' > response.txt
+		curl -k -i https://localhost:8080/hello | awk 'NR == 1{print $2}' > response.txt 
 	elif [ $res -eq 2 ]
 	then
-		curl -k -i https://localhost:8080/digest | awk 'NR == 1{print $2}' > response.txt
+		curl -k -i https://localhost:8080/digest | awk 'NR == 1{print $2}' > response.txt 
 	else
-		curl -k -i https://localhost:8080/nothing | awk 'NR == 1{print $2}' > response.txt
+		curl -k -i https://localhost:8080/nothing | awk 'NR == 1{print $2}' > response.txt 
 	fi
 	#get the response code using awk and store it in a variable
 	RESPCODE=$(awk '{print $1}' response.txt)
@@ -82,6 +82,8 @@ kill $APMGATHERPID
 
 #./cleanup.sh
 #create the graphs
-./createGraphs.sh 
+./createGraphs.sh
+
+#change the stuff in PerformanceInfo and InitInfo so everyone is not write-protected
 
 exit 0
