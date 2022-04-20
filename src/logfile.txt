@@ -1,4 +1,4 @@
-Wed Apr  6 09:42:30 2022
+Wed Apr 20 09:17:50 2022
 Server building from config file
 Server configuration:
 Port Number: 8080
@@ -10,14 +10,22 @@ HTTPS: 1
 Map IPv4 into IPv6: 1
 SSL Certificate: ../PKI/certs/mycert.crt
 SSL Key: ../PKI/ca/mykey.pem
-Wed Apr  6 09:42:46 2022
-Access logged at /xml?type=merchants METHOD: GET
-Wed Apr  6 09:42:49 2022
-Access logged at /xml?type=merchants METHOD: GET
-Wed Apr  6 09:43:03 2022
+Wed Apr 20 09:18:17 2022
+Access logged at /xml METHOD: GET
+Wed Apr 20 09:18:21 2022
+Access logged at /xml METHOD: GET
+Wed Apr 20 09:18:25 2022
+Access logged at /xml METHOD: GET
+Wed Apr 20 09:18:25 2022
+Access logged at /favicon.ico METHOD: GET
+Wed Apr 20 09:22:40 2022
 Access logged at /xml?type=users METHOD: GET
-Wed Apr  6 09:43:19 2022
+Wed Apr 20 09:22:40 2022
+Access logged at /xml?type=users METHOD: GET
+Wed Apr 20 09:22:47 2022
 Access logged at /xml?type=merchants METHOD: GET
-Wed Apr  6 09:43:20 2022
+Wed Apr 20 09:22:48 2022
 Access logged at /xml?type=merchants METHOD: GET
+Wed Apr 20 09:22:59 2022
+Access logged at /xml?type=cards METHOD: GET
 Interrupt signal received, shutting down.

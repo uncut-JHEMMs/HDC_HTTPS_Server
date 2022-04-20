@@ -53,6 +53,7 @@ std::string UserRecord::toString() const{
 
 //need a comparator function for when we're sorting, maybe use static functions instead?
 //comparator by ID
+/*
 static bool IDComp(const UserRecord& a, const UserRecord& b){
     return a.getUserID() < b.getUserID();
 }
@@ -67,5 +68,5 @@ static bool LastNameComp(const UserRecord& a, const UserRecord& b){
 static bool FirstNameComp(const UserRecord& a, const UserRecord& b){
     return a.getFirstName() < b.getFirstName();
 }
-
+*/
 

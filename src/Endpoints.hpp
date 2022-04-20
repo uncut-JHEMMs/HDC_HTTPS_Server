@@ -38,15 +38,21 @@ class hello_world_resource : public httpserver::http_resource {
      }
 };
 //servers the user documents
-class docs_resource : public httpserver::http_resource {
+class docs_resource : public httpserver::http_resource 
+{
 public:
 //digest authentication part
-    const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) {
-	if (req.get_digested_user() == "") {
-            return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, true));
-         } else {
+    const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) 
+    {
+        if (req.get_digested_user() == "") 
+        {
+                return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, true));
+        } 
+        else 
+        {
             bool reload_nonce = false;
-            if (!req.check_digest_auth("test@example.com", "mypass", 300, &reload_nonce)) {
+            if (!req.check_digest_auth("test@example.com", "mypass", 300, &reload_nonce)) 
+            {
                 return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, reload_nonce));
             }
         }
@@ -60,11 +66,14 @@ public:
         //return merchants
         return std::shared_ptr<httpserver::file_response>(new httpserver::file_response("xmlfiles/merchants.xml", 200, "text/plain"));
     }
+    else if (arg == "cards"){
+        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response("xmlfiles/cards.xml", 200, "text/plain"));
+    }
     else{
         //return an error
         return std::shared_ptr<httpserver::string_response>(new httpserver::string_response("FAIL", 500, "text/plain"));
     }
-    //TODO: Get this endpoint to post stats
+
 
     }
 };

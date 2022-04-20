@@ -8,9 +8,9 @@
 */
 
 #include <set>
+#include <unordered_map>
 #include <string>
-#include "UserRecord.hpp"
-#include "MerchantRecord.hpp"
+#include "assignFuncs.hpp"
 #include <tinyxml2.h>
 #include <sstream>
 #include <fstream>
@@ -18,81 +18,6 @@
 #include <vector>
 #include <memory> //unique_ptr
 
-#define USER_XML_FILENAME "users.xml"
-#define MERCHANT_XML_FILENAME "merchants.xml"
-#define PLACES_XML_FILENAME "places.xml"
-
-/*
-    have a function that operates on a single line: gets the user ID and the
-    card ID. Does it take a stream? the stream is also in the line. See below for some ideas
-*/
-
-/*
-    Write all the users from the users vector to the file
-*/
-bool writeUsersToXML(std::vector<std::unique_ptr<UserRecord>>& vec){
-    //start the xml document
-  tinyxml2::XMLDocument doc;
-  //create a node
-  tinyxml2::XMLNode* pRoot = doc.NewElement("Users");
-  //attach the node to the document
-  doc.InsertFirstChild(pRoot);
-  //for every item in the vector, put in nodes for id, first name, last name, email
-  tinyxml2::XMLElement* pElement;
-  for (const std::unique_ptr<UserRecord>& uptr : vec){
-    // make a new child for root
-    tinyxml2::XMLNode* userNode = doc.NewElement("User");
-    pRoot->InsertFirstChild(userNode);
-    //id
-    pElement = doc.NewElement("UserID");
-    pElement->SetText(uptr->getUserID());
-    userNode->InsertEndChild(pElement);
-    //first name
-    pElement = doc.NewElement("FirstName");
-    pElement->SetText(uptr->getFirstName().c_str());
-    userNode->InsertEndChild(pElement);
-    //last name
-    pElement = doc.NewElement("LastName");
-    pElement->SetText(uptr->getLastName().c_str());
-    userNode->InsertEndChild(pElement);
-    //email
-    pElement = doc.NewElement("Email");
-    pElement->SetText(uptr->getEmail().c_str());
-    userNode->InsertEndChild(pElement);
-  }
-  //save the document
-  doc.SaveFile(USER_XML_FILENAME);
-  return true;
-}
-
-bool writeMerchantsToXML(std::vector<std::unique_ptr<MerchantRecord>>& merchants){
-tinyxml2::XMLDocument doc;
-  //create a node
-  tinyxml2::XMLNode* pRoot = doc.NewElement("Merchants");
-  //attach the node to the document
-  doc.InsertFirstChild(pRoot);
-  //for every item in the vector, put in nodes for id, first name, last name, email
-  tinyxml2::XMLElement* pElement;
-  for (auto it = merchants.rbegin(); it != merchants.rend(); it = ++it){
-    // make a new child for root
-    tinyxml2::XMLNode* userNode = doc.NewElement("Merchant");
-    pRoot->InsertFirstChild(userNode);
-    //id
-    pElement = doc.NewElement("Name");
-    pElement->SetText((*it)->getName().c_str());
-    userNode->InsertEndChild(pElement);
-    //first name
-    pElement = doc.NewElement("MCC");
-    pElement->SetText((*it)->getMCC().c_str());
-    userNode->InsertEndChild(pElement);
-    pElement = doc.NewElement("DocCode");
-    pElement->SetText((*it)->getDocCode().c_str());
-    userNode->InsertEndChild(pElement);
-  }
-  //save the document
-  doc.SaveFile(MERCHANT_XML_FILENAME);
-  return true;
-}
 /*
     parallelization stuff someday. Remember that we can probably just have the
     main thread pull lines from the file into a stream, and then pass the streams
@@ -102,7 +27,11 @@ tinyxml2::XMLDocument doc;
 */
 
 int main(int argc, char* argv[]){ //argv[1] is the flat input file
-    //open the files
+    //keep track of the transaction values as we find them for use in other field
+    unsigned int userKey, cardKey, idNum, nextLocationIndex = 0;
+    std::string merchantNameKey, cityKey, stateKey, zipKey, mccKey;
+
+    //open input files
     std::ifstream flatFile(argv[1], std::ifstream::in);
     if (!flatFile.is_open()){
         std::cout << "Couldn't open input file" <<std::endl;
@@ -120,18 +49,30 @@ int main(int argc, char* argv[]){ //argv[1] is the flat input file
         std::cout << "Couldn't open merchants file" <<std::endl;
         exit(1);
     }
-    //std::ofstream outFile("UserRecords.txt", std::ofstream::out);
-    //merchants xml is in its function
+    //open the card numbers file
+    std::ifstream cardsInFile("Cards.txt", std::ifstream::in);
+    if (!cardsInFile.is_open()){
+        std::cout << "Couldn't open cards file" <<std::endl;
+        exit(1);
+    }
 
-    //outFile is fine like this, no fail to read
     std::string line, userID, nameLine;
-    unsigned int idNum;
     //sets for checking for uniqueness
-    std::set<unsigned int> idSet;
+    std::unordered_map<unsigned int,std::shared_ptr<UserRecord>> idMap;
+    std::set<std::pair<unsigned int, unsigned int>> cardSet;
     std::set<std::string> merchantSet;
+    auto locationComp = [](const LocationRecord& a, const LocationRecord& b){
+        if (a.getState() < b.getState())return true;
+        if (a.getCity() < b.getCity()) return true;
+        return a.getZip() < b.getZip();
+    };
+    std::set<LocationRecord, decltype(locationComp)> locationSet(locationComp);
     //vectors for holding the record type
-    std::vector<std::unique_ptr<UserRecord>> users;
+    std::vector<std::shared_ptr<UserRecord>> users;
     std::vector<std::unique_ptr<MerchantRecord>> merchants;
+    std::vector<std::unique_ptr<CardRecord>> cards;
+    std::vector<std::unique_ptr<LocationRecord>> locations;
+    LocationRecord location;
     //open the output file where the user records go: serialized? HAPPENS IN WRITE METHOD
     //skip the first line because it's headers
     while(getline(flatFile, line))
@@ -145,18 +86,16 @@ int main(int argc, char* argv[]){ //argv[1] is the flat input file
         std::getline(streamLine,userID,','); //this is the user ID filed
         //turn userID into an unsigned int
         idNum = stoul(userID);
+        userKey = idNum;
         //search the set for the ID
-        auto it = idSet.find(idNum);
-        if (it == idSet.end())
+        auto it = idMap.find(idNum);
+        if (it == idMap.end())
         {
              /*
                 it's not already in the set, so build a new UserRecord with
                 the ID and the next name from the names file, and write it 
                 out to the user record file
             */
-           //put the id into the set
-           idSet.insert(idNum);
-           //get next name from file
            getline(nameFile, nameLine);
            std::stringstream nameStream(nameLine);
             //make new user record with all the members
@@ -165,52 +104,104 @@ int main(int argc, char* argv[]){ //argv[1] is the flat input file
             nameStream >> fName;
             nameStream >> lName;
             nameStream >> eMail;
-            std::unique_ptr<UserRecord> uptr(new UserRecord(fName,
+            std::shared_ptr<UserRecord> uptr(new UserRecord(fName,
                 lName, eMail, idNum));
+            idMap.insert({idNum, uptr});
             users.push_back(std::move(uptr));
         }
-            std::getline(streamLine,nameLine,','); //credit card
-            std::getline(streamLine,nameLine,','); //year
-            std::getline(streamLine,nameLine,','); //month
-            std::getline(streamLine,nameLine,','); //day
-            std::getline(streamLine,nameLine,','); //time
-            std::getline(streamLine,nameLine,','); //amount
-            std::getline(streamLine,nameLine,','); //use chip
-            std::getline(streamLine,nameLine,','); //merchant name
-            std::string merchantText = nameLine;
-            //search the set for it
-            auto mit = merchantSet.find(merchantText);
-            if (mit == merchantSet.end()){
-                merchantSet.insert(merchantText);
-                //now we add a new merchant from the file
-                getline(merchantsInFile, nameLine); //note the variable re-use
-                std::stringstream merchantStream(nameLine);
-                std::string name, product, place, mcc, fullName;
-                merchantStream >> name;
-                merchantStream >> product;
-                merchantStream >> place;
-                merchantStream >> mcc;
-                merchantStream.str("");
-                merchantStream.clear();
-                merchantStream << name << " " << product << " " << place;
-                fullName = merchantStream.str();
-                std::unique_ptr<MerchantRecord> uptr(new MerchantRecord(fullName, mcc, merchantText));
-                merchants.push_back(std::move(uptr)); //have to explicitly move uptr
-            }
+        std::getline(streamLine,nameLine,','); //credit card
+        //we now have the value of the card
+        cardKey = stoul(nameLine);
+        //make a pair with the user and the card number
+        std::pair<unsigned int, unsigned int> ucPair{userKey,cardKey};
+        //search the UM for the pair key
+        std::set<std::pair<unsigned int, unsigned int>>::iterator cc_it = cardSet.find(ucPair);
+        if (cc_it == cardSet.end())
+        {
 
+            //add it to the set
+            cardSet.insert(ucPair);
+            //make a new card from the card file
+            getline(cardsInFile, nameLine);
+            std::stringstream cardStream(nameLine);
+            //make new user record with all the members
+           //push it to some data structure
+            std::string cardNumber, expMonth, expYear;
+            cardStream >> cardNumber;
+            cardStream >> expMonth;
+            cardStream >> expYear;
+            std::unique_ptr<CardRecord> ccr_ptr(new CardRecord(ucPair.first,ucPair.second, cardNumber));
+            //put it into the cardRecords vector
+            cards.push_back(std::move(ccr_ptr));
+        }
+
+        std::getline(streamLine,nameLine,','); //year
+        std::getline(streamLine,nameLine,','); //month
+        std::getline(streamLine,nameLine,','); //day
+        std::getline(streamLine,nameLine,','); //time
+        std::getline(streamLine,nameLine,','); //amount
+        std::getline(streamLine,nameLine,','); //use chip
+
+        std::getline(streamLine,nameLine,','); //merchant name
+        merchantNameKey = nameLine;
+        //search the set for it
+        auto mit = merchantSet.find(merchantNameKey);
+        if (mit == merchantSet.end())
+        {
+            merchantSet.insert(merchantNameKey);
+            //now we add a new merchant from the file
+            getline(merchantsInFile, nameLine); //note the variable re-use
+            std::stringstream merchantStream(nameLine);
+            std::string name, product, place, mcc, fullName;
+            merchantStream >> name;
+            merchantStream >> product;
+            merchantStream >> place;
+            merchantStream >> mcc;
+            merchantStream.str("");
+            merchantStream.clear();
+            merchantStream << name << " " << product << " " << place;
+            fullName = merchantStream.str();
+            std::unique_ptr<MerchantRecord> uptr(new MerchantRecord(fullName, mcc, merchantNameKey));
+            merchants.push_back(std::move(uptr)); //have to explicitly move uptr
+        }
+        std::getline(streamLine,nameLine,','); //merchant city, can be ONLINE
+        cityKey = nameLine;
+        std::getline(streamLine,nameLine,','); //merchant state; if city is ONLINE, this blank
+        stateKey = nameLine;
+        std::getline(streamLine,nameLine,','); //merchant zip; if city is ONLINE, this is blank
+        /* There's an error here with the comparator
+        zipKey = nameLine;
+        location.setCity(cityKey);
+        location.setState(stateKey);
+        location.setZip(zipKey);
+        //check the set, insert and add it if it it's not there
+        auto l_it = locationSet.find(location);
+        if (l_it == locationSet.end()){
+            locationSet.insert(location);
+            std::unique_ptr<LocationRecord> uptr(new LocationRecord(cityKey,
+                stateKey,zipKey,nextLocationIndex++));
+            locations.push_back(std::move(uptr));
+        }
+        */
+        //create a location record
+        std::getline(streamLine,nameLine,','); //merchant MCC
+        std::getline(streamLine,nameLine,','); //error, blank for none
+        std::getline(streamLine,nameLine,','); //fraud            
     }
-
     //dump the entire structures out to the output files
+    //TODO these need to be written to a binary file to save space
     writeUsersToXML(users);
-    std::cout << merchants.size();
+    //writeUsersToSerial(users);
     writeMerchantsToXML(merchants);
-    
-
-
-    //close the files
+    //writeMerchantsToSerial(merchants);
+    //writeTransactionsToSerial(transactions);
+    writeCardsToXML(cards);
+    //writeCardsToSerial(cards);
+    writeLocationsToXML(locations);
     flatFile.close();
     nameFile.close();
     merchantsInFile.close();
+    cardsInFile.close();
     //xml files are closed by the library
     return 0;
 }

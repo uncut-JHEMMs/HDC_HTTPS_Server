@@ -20,10 +20,15 @@ $(TARGET): $(OBJ)
 lilXML: 
 	$(CC) -o $@ $^ $(CFLAGS) tinyxml2.cpp SimpleXMLOutput.cpp
 
+test:
+	$(CC -o tests $(CFLAGS) testAssign.cpp tinyxml2.cpp
+
+#need rules for merchantGen, UserGen, CardGen
+
 assignFromTransactions: $(XMLSTUFF)
 	$(CC) -o $@ $(CFLAGS) AssignFromTransactions.cpp UserRecord.cpp tinyxml2.cpp
 
 .PHONY: clean # don't mess with files named "clean", just use the clean rule
 
 clean: #remove all the generated object files and the executable
-	rm -rf *.o $(TARGET) lilXML assignFromTransactions
+	rm -rf *.o $(TARGET) lilXML assignFromTransactions test
