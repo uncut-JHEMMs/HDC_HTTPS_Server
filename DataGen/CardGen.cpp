@@ -16,6 +16,18 @@ unsigned int getExpirationMonth(){
 unsigned int getExpirationYear(){
     return (rand() % 4) + 2023;
 }
+/*
+    Takes a string of numbers and returns the final digit according to Luhn 
+    Algorithm.The length of the string can be anything. This needs to be put 
+    into an object:
+    1) If it's in an object, I can ask for the Luhn's result on any string of
+    numbers
+    2) If it isn't in an object and it's just in main, I can't test the methods 
+*/
+char getLuhnsResult(const std::string& num)
+{
+
+}
 
 int main()
 {
@@ -33,6 +45,8 @@ int main()
         if (i % 3 == 0){
             //visa
             cardString << "4";
+            //put 14 digits of next visa in place
+            //use Luhn to find the 16th digit and put it in place
             cardString << std::setfill('2') << std::setw(15) << nextVisaNum++;
             cardString << " " << getExpirationMonth() << " " << getExpirationYear() << std::endl;
             outFile << cardString.str();

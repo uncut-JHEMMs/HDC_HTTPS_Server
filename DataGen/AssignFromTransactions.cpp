@@ -79,9 +79,7 @@ int main(int argc, char* argv[]){ //argv[1] is the flat input file
     {
         getline(flatFile, line);
         if (line.empty()) continue; //we're gonne need to check for the blank fields too
-        //when we get to the other fields, they just go here along with user stuff
         //make a stream from the line
-        //userID = "";
         std::stringstream streamLine(line);
         std::getline(streamLine,userID,','); //this is the user ID filed
         //turn userID into an unsigned int
@@ -169,6 +167,7 @@ int main(int argc, char* argv[]){ //argv[1] is the flat input file
         std::getline(streamLine,nameLine,','); //merchant state; if city is ONLINE, this blank
         stateKey = nameLine;
         std::getline(streamLine,nameLine,','); //merchant zip; if city is ONLINE, this is blank
+        
         /* There's an error here with the comparator
         zipKey = nameLine;
         location.setCity(cityKey);
@@ -183,7 +182,6 @@ int main(int argc, char* argv[]){ //argv[1] is the flat input file
             locations.push_back(std::move(uptr));
         }
         */
-        //create a location record
         std::getline(streamLine,nameLine,','); //merchant MCC
         std::getline(streamLine,nameLine,','); //error, blank for none
         std::getline(streamLine,nameLine,','); //fraud            
