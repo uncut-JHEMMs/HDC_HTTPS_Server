@@ -1,4 +1,4 @@
-Wed Apr 20 12:38:52 2022
+Wed May  4 13:04:34 2022
 Server building from config file
 Server configuration:
 Port Number: 8080
@@ -10,12 +10,26 @@ HTTPS: 1
 Map IPv4 into IPv6: 1
 SSL Certificate: ../PKI/certs/mycert.crt
 SSL Key: ../PKI/ca/mykey.pem
-Wed Apr 20 13:03:31 2022
+Wed May  4 13:04:43 2022
+Access logged at /xml?type=merchantCount METHOD: GET
+Wed May  4 13:04:48 2022
+Access logged at /xml?type=merchantCount METHOD: GET
+Wed May  4 13:05:09 2022
+Access logged at /xml?type=transactionTypes METHOD: GET
+Wed May  4 13:05:32 2022
+Access logged at /xml?type=transactionTypes METHOD: GET
+Wed May  4 13:07:09 2022
 Access logged at /xml?type=users METHOD: GET
-Wed Apr 20 13:03:31 2022
+Wed May  4 13:07:25 2022
+Access logged at /xml?type=users&&name=Jack%20Lewis METHOD: GET
+Wed May  4 13:08:11 2022
+Access logged at /xml?type=users&&name=Jack%20Lewis METHOD: GET
+Wed May  4 13:08:39 2022
 Access logged at /xml?type=users METHOD: GET
-Wed Apr 20 13:03:35 2022
-Access logged at /xml?type=merchants METHOD: GET
-Wed Apr 20 13:03:35 2022
-Access logged at /xml?type=merchants METHOD: GET
+Wed May  4 13:11:25 2022
+Access logged at /xml?type=users&&name=Jack%20Lewis METHOD: GET
+Wed May  4 13:11:25 2022
+Access logged at /xml?type=users&&name=Jack%20Lewis METHOD: GET
+Wed May  4 13:11:44 2022
+Access logged at /xml?type=users&&name=James%20Logan METHOD: GET
 Interrupt signal received, shutting down.

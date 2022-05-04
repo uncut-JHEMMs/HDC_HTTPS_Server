@@ -29,9 +29,6 @@ testLuhns.exe:
 cardGen.exe:
 	$(CC) -o cardGen.exe $(CFLAGS) CardGen.cpp
 
-enrichment.exe:
-	$(CC) -o enrichment.exe $(CFLAGS) Enrichment.cpp DataEnricher.cpp UserRecord.cpp TransactionRecord.cpp 
-
 #need rules for merchantGen, UserGen, CardGen
 
 assignFromTransactions: $(XMLSTUFF)
@@ -40,4 +37,4 @@ assignFromTransactions: $(XMLSTUFF)
 .PHONY: clean # don't mess with files named "clean", just use the clean rule
 
 clean: #remove all the generated object files and the executable
-	rm -rf *.o $(TARGET) lilXML assignFromTransactions *.exe 
+	rm -rf *.o $(TARGET) lilXML assignFromTransactions *.exe

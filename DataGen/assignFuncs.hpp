@@ -154,4 +154,10 @@ bool writeLocationsToXML(std::vector<std::unique_ptr<LocationRecord>>& vec){
   return true;
 }
 
+/*
+  take a string representing an amount in dollars (with leading dollar sign),
+  and return an unsigned int that is the amount in cents
+   
+*/
+
 #endif

@@ -8,7 +8,9 @@
 #include <thread>
 #include "Logger.hpp"
 #include "LogMessage.hpp"
+#include "Queries.hpp"
 
+const std::string QUERYFILENAME{"../DataGen/lilOutput.fsv"};
 extern Logger logger;
 /*
     I'm not sure if I need a class that inherits httpserver::http_resource.
@@ -18,6 +20,30 @@ extern Logger logger;
 
 //used for digest
 #define MY_OPAQUE "11733b200778ce33060f31c9af70a870ba96ddd4"
+
+
+/*
+    replace %20 with a space in a provided username
+*/
+std::string cleanUserName(const std::string& user)
+{
+    //make a string stream
+    std::stringstream stream(user);
+    std::string firstName, lastName;
+    //get the part before the %
+    getline(stream,firstName,'%');
+    //get the part before the 0
+    getline(stream,lastName,'0');
+    //rest is the last name
+    getline(stream,lastName);
+    //make a new string that is 'firstName lastName'
+    stream.str("");
+    stream.clear();
+    stream << firstName << " " << lastName;
+    std::string fullName = stream.str();
+    return fullName;
+}
+
 
 class hello_world_resource : public httpserver::http_resource {
     const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) {
@@ -60,18 +86,31 @@ public:
     std::string arg = req.get_arg("type");
     if (arg == "users"){
         //return users
-        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response("xmlfiles/users.xml", 200, "text/plain"));
+        std::string name = req.get_arg("name");
+        if(name.empty())
+        {
+            return std::shared_ptr<httpserver::string_response>(new httpserver::string_response("FAIL: supply a username to query for", 500, "text/plain"));
+        }
+        //santize the username
+        std::string sanName = cleanUserName(name);
+        //do the query
+        std::string result = getUserTransactions(QUERYFILENAME,sanName);
+        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response(result.c_str(), 200, "text/plain"));
     }
-    else if (arg == "merchants"){
-        //return merchants
-        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response("xmlfiles/merchants.xml", 200, "text/plain"));
+    else if (arg == "merchantCount"){
+        //return the merchant count
+        std::string fileName = getNumberOfMerchants(QUERYFILENAME); 
+        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response(fileName.c_str(), 200, "text/plain"));
     }
-    else if (arg == "cards"){
-        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response("xmlfiles/cards.xml", 200, "text/plain"));
+    else if (arg == "transactionTypes"){
+        //run the query on the file
+        std::string fileName = getTransactionTypes(QUERYFILENAME);
+        //return the string result
+        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response(fileName.c_str(), 200, "text/plain"));
     }
     else{
         //return an error
-        return std::shared_ptr<httpserver::string_response>(new httpserver::string_response("FAIL", 500, "text/plain"));
+        return std::shared_ptr<httpserver::string_response>(new httpserver::string_response("FAIL: unknown argument", 500, "text/plain"));
     }
 
 
@@ -137,4 +176,5 @@ class latency_resource : public httpserver::http_resource {
     }
 
 };
+
 #endif

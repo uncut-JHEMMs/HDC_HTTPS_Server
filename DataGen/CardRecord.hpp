@@ -9,10 +9,16 @@ class CardRecord{
     unsigned int userKey;
     unsigned int cardKey;
     std::string cardNumber;
+    //need expiration date
     public:
     CardRecord():userKey(0),cardKey(0), cardNumber(""){}
     CardRecord(unsigned int user, unsigned int card, std::string number): userKey(user),
     cardKey(card), cardNumber(number){}
+    CardRecord(const CardRecord& nCard){
+        userKey = nCard.getUserKey();
+        cardKey = nCard.getCardKey();
+        cardNumber = nCard.getCardNumber();
+    }
     unsigned int getUserKey() const{
         return userKey;
     }
@@ -32,5 +38,9 @@ class CardRecord{
         cardNumber = number;
     }
 
+    bool operator<(const CardRecord& other) const{
+        if (getCardKey() < other.getCardKey()) return true;
+        return getUserKey() < other.getUserKey();
+    }
 };
 #endif

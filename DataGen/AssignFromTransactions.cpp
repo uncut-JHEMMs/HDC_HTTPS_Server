@@ -73,12 +73,12 @@ int main(int argc, char* argv[]){ //argv[1] is the flat input file
     std::vector<std::unique_ptr<CardRecord>> cards;
     std::vector<std::unique_ptr<LocationRecord>> locations;
     LocationRecord location;
-    //open the output file where the user records go: serialized? HAPPENS IN WRITE METHOD
-    //skip the first line because it's headers
+
+    //skip the first line because it's just headers
+    getline(flatFile, line);
     while(getline(flatFile, line))
     {
-        getline(flatFile, line);
-        if (line.empty()) continue; //we're gonne need to check for the blank fields too
+        if (line.empty()) break; //we're gonne need to check for the blank fields too
         //make a stream from the line
         std::stringstream streamLine(line);
         std::getline(streamLine,userID,','); //this is the user ID filed
@@ -116,7 +116,6 @@ int main(int argc, char* argv[]){ //argv[1] is the flat input file
         std::set<std::pair<unsigned int, unsigned int>>::iterator cc_it = cardSet.find(ucPair);
         if (cc_it == cardSet.end())
         {
-
             //add it to the set
             cardSet.insert(ucPair);
             //make a new card from the card file
@@ -148,8 +147,9 @@ int main(int argc, char* argv[]){ //argv[1] is the flat input file
         {
             merchantSet.insert(merchantNameKey);
             //now we add a new merchant from the file
-            getline(merchantsInFile, nameLine); //note the variable re-use
-            std::stringstream merchantStream(nameLine);
+            std::string merchantName;
+            getline(merchantsInFile, merchantName); //no variable re-use allowed
+            std::stringstream merchantStream(merchantName);
             std::string name, product, place, mcc, fullName;
             merchantStream >> name;
             merchantStream >> product;

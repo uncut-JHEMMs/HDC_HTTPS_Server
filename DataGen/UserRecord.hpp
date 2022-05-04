@@ -47,7 +47,11 @@ class UserRecord{
     void setUserID(const unsigned int& id){
         userID = id;
     }
+    
     UserRecord();
+    
+    UserRecord(const UserRecord& nUser);
+
     UserRecord(const std::string& first, const std::string& last, 
     const std::string& em, const unsigned int& id);
     //need a comparator function for when we're sorting

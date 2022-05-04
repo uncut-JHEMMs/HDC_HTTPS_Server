@@ -20,6 +20,15 @@ UserRecord::UserRecord(const std::string& first, const std::string& last,
     const std::string& em, const unsigned int& id): firstName(first),
     lastName(last), emailAddress(em), userID(id){/*empty*/}
 
+//copy constructor
+UserRecord::UserRecord(const UserRecord& nUser){
+    firstName = nUser.getFirstName();
+    lastName = nUser. getLastName();
+    userID = nUser.getUserID();
+    emailAddress = nUser.getEmail();
+    }
+
+
 std::string UserRecord::toString() const{
     std::stringstream res;
     res << userID;
