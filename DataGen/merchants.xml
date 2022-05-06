@@ -1,0 +1,34 @@
+<Merchants>
+    <Merchant>
+        <Name>Basil's Truck Position</Name>
+        <MCC>5971</MCC>
+    </Merchant>
+    <Merchant>
+        <Name>Juliet's Book Collection</Name>
+        <MCC>5651</MCC>
+    </Merchant>
+    <Merchant>
+        <Name>Dylan's Bar-Supply Merchandiser</Name>
+        <MCC>5942</MCC>
+    </Merchant>
+    <Merchant>
+        <Name>Devonte's Bread Business</Name>
+        <MCC>5732</MCC>
+    </Merchant>
+    <Merchant>
+        <Name>Mark's Crepe Mom-and-Pop</Name>
+        <MCC>5310</MCC>
+    </Merchant>
+    <Merchant>
+        <Name>Mikheal's Newspaper Merchandiser</Name>
+        <MCC>5311</MCC>
+    </Merchant>
+    <Merchant>
+        <Name>Charley's Shoe Abbatoir</Name>
+        <MCC>5937</MCC>
+    </Merchant>
+    <Merchant>
+        <Name>Steven's Door Company</Name>
+        <MCC>5311</MCC>
+    </Merchant>
+</Merchants>

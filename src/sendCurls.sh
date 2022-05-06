@@ -3,12 +3,14 @@
 #of massif and callgrind, which can't be run in the background
 HOSTNAME=https://localhost:8080
 ENDPOINT=hello
-REQUESTS=50
+REQUESTS=1
 OUTFILE=response.txt
 echo "Sending $REQUESTS Requests"
 COUNTER=0
+echo " " > $OUTFILE
 while [ $COUNTER -le $REQUESTS ]
 do
 	COUNTER=$((COUNTER + 1))
-	curl -k -i --digest --user myuser:mypass $HOSTNAME/$ENDPOINT > $OUTFILE &
+	xargs -I % -P 1000 curl -s -k -i https://localhost:8080/hello < <(printf '%s\n' {1..1000}) >> $OUTFILE
 done
+echo " " >> $OUTFILE 

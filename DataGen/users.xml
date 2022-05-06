@@ -1,0 +1,20 @@
+<Users>
+    <User>
+        <UserID>2</UserID>
+        <FirstName>Daniel</FirstName>
+        <LastName>Ryan</LastName>
+        <Email>Daniel.Ryan@smoothceeplusplus.com</Email>
+    </User>
+    <User>
+        <UserID>1</UserID>
+        <FirstName>James</FirstName>
+        <LastName>Logan</LastName>
+        <Email>James.Logan@smoothceeplusplus.com</Email>
+    </User>
+    <User>
+        <UserID>0</UserID>
+        <FirstName>Jack</FirstName>
+        <LastName>Lewis</LastName>
+        <Email>Jack.Lewis@smoothceeplusplus.com</Email>
+    </User>
+</Users>

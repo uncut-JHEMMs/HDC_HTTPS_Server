@@ -1,0 +1,10 @@
+Jack Lewis,     Card 1, date/time/amount,   Swipe Transaction,      Basil's Truck Position,     city/state/zip/errors/fraud
+Jack Lewis,     Card 1,                     Swipe Transaction,      Juliet's Book Collection
+Jack Lewis,     Card 2,                     Online Transaction,     Juliet's Book Collection
+Jack Lewis,     Card 3,                     Chip Transaction,       Dylan's Bar-Supply Merchandiser
+Jack Lewis,     Card 1,                     Swipe Transaction,      Devonte's Bread Business
+James Logan,    Card 1,                     Swipe Transaction,      Mark's Crepe Mom-and-Pop
+James Logan,    Card 2,                     Chip Transaction,       Juliet's Book Collection
+James Logan,    Card 2,                     Swipe Transaction,      Juliet's Book Collection
+Daniel Ryan,    Card 1,                     Swipe Transaction,      Juliet's Book Collection
+Daniel Ryan,    Card 2,                     Swipe Transaction,      Mikheal's Newspaper Merchandiser

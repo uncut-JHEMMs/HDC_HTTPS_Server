@@ -4,5 +4,5 @@ rm 'device name'
 rm InitInfo/*
 rm PerformanceData/*
 rm ValgrindData/*
-
+rm HistoricalData/*
 exit 0
