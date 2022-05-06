@@ -20,6 +20,15 @@ UserRecord::UserRecord(const std::string& first, const std::string& last,
     const std::string& em, const unsigned int& id): firstName(first),
     lastName(last), emailAddress(em), userID(id){/*empty*/}
 
+//copy constructor
+UserRecord::UserRecord(const UserRecord& nUser){
+    firstName = nUser.getFirstName();
+    lastName = nUser. getLastName();
+    userID = nUser.getUserID();
+    emailAddress = nUser.getEmail();
+    }
+
+
 std::string UserRecord::toString() const{
     std::stringstream res;
     res << userID;
@@ -53,6 +62,7 @@ std::string UserRecord::toString() const{
 
 //need a comparator function for when we're sorting, maybe use static functions instead?
 //comparator by ID
+/*
 static bool IDComp(const UserRecord& a, const UserRecord& b){
     return a.getUserID() < b.getUserID();
 }
@@ -67,5 +77,5 @@ static bool LastNameComp(const UserRecord& a, const UserRecord& b){
 static bool FirstNameComp(const UserRecord& a, const UserRecord& b){
     return a.getFirstName() < b.getFirstName();
 }
-
+*/
 

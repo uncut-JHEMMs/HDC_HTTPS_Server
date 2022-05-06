@@ -1,1 +1,4 @@
 To look for duplicate entries in a file, use "uniq -D filename"
+
+4/20/22 Issue in location code, the comparator isn't working right and adding lots of unnecessary values into the 
+locations data structures, which makes the program blow up.
