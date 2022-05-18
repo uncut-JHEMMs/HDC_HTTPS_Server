@@ -1,7 +1,7 @@
 /*
     test file for queries functions
 */
-#include "Queries.hpp"
+#include "../Queries.hpp"
 
 int main(){
 

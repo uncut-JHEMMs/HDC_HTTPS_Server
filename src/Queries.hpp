@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <vector>
+#include "../DataGen/TransactionRecord.hpp"
 
 /*
     returns a string that lists all the transaction types, maybe in
@@ -23,4 +25,7 @@ std::string getNumberOfMerchants(const std::string& dbFileName);
     in a file
 */
 std::string getUserTransactions(const std::string& dbFileName, const std::string& userName);
+
+void top10largestTransactions(std::vector<TransactionRecord>& vec, const std::string& dbFileName);
 #endif
+
