@@ -142,7 +142,6 @@ class DataManipulator{
     static unsigned int timeStringToUInt(const std::string& timeS);
     //fraud to fraud byte
     static unsigned char fraudToByte(const std::string& fraudS);
-
     /*
         take an entire transaction record ascii string and turn it into the
         compact format, return the non-ascii char array? The array is passed

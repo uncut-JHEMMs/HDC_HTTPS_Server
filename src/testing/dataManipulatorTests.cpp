@@ -101,7 +101,7 @@ void testDMBasics()
 */
 void testStaticFunctions()
 {
-    {
+  /*  {
         DataManipulator dmI("lilInput.csv", "test.cdf");
         char c[4];
         char* d = reinterpret_cast<char*>(&c);
@@ -112,15 +112,15 @@ void testStaticFunctions()
         }
         //dmI.writeAs4Bytes("16777472",c); //bytes  LITTLE END HERE:nul soh(1) nul soh(1)
     } //dmI goes out of scope and destructor closes the file
+    */
     std::ifstream inFile("test.cdf");
     int i = DataManipulator::getIntFrom4Bytes(inFile);
-    assert(i == 127);
-    /*
+    assert(i == 67305985);
     int j = DataManipulator::getIntFrom2Bytes(inFile);
-    assert(j == 256);
-    int k = DataManipulator::getIntFrom1Byte(inFile);
+    assert(j == 127);
+    int k = DataManipulator::getIntFrom1Byte(inFile); //interesting thing here. Seems as though the file stream wraps around if we've hit the end of file in a previous read
     assert(k == 0);
-    */
+    
 }
 
 void testConversions()
@@ -170,6 +170,19 @@ void testConversions()
     assert(uc == 0);
 }
 
+
+/*
+    run the line converter on a string to make sure the values are coming out correctly
+*/
+void testAsciiTRToRDF(){
+    DataManipulator dm;
+    std::string input{"0,0,2002,9,1,06:21,$11.00,Swipe Transaction,3527213246127876953,La Verne,CA,91750.0,5300,,No"};
+    char cline[35];
+    //check that each field is right, we want to test every variation: different years, times, amounts, types, cities, states, zips, errors, frauds
+    dm.asciiTRtoCDF(input, cline);
+    assert(DataManipulator::getIntFrom4Bytes())
+}
+
 void testSmall(){
     DataManipulator dm("Above100After8ByZip.csv", "AHAEBZ.cdf");
     dm.compactTransactions();
@@ -186,7 +199,8 @@ int main()
     //testDMBasics();
     //testStaticFunctions();
     //testConversions();
-    testSmall();
+    
+    //testSmall();
     return 0;
 }
 

@@ -236,6 +236,10 @@ unsigned char DataManipulator::fraudToByte(const std::string& fraudS)
 */
 void DataManipulator::asciiTRtoCDF(const std::string& asciiRec, char* compactLine)
 {
+    /*
+        the sets already belong to the object, we just need to put things in them and get
+        things out
+    */
     //break up the string by commas
     unsigned int pos = 0;
     std::string userIDS, cardIDS, yearS, monthS, dayS, timeS, amountS, typeS, merchantS,
