@@ -72,6 +72,15 @@ int main(int argc, char **argv)
     ws.register_resource("/latency",&lr, true);
     docs_resource xmlr;
     ws.register_resource("/xml", &xmlr, true);
+    Demo_PFBY_Resource dpfbyr;
+    ws.register_resource("dpfby", &dpfbyr, true);
+    Big_PFBY_Resource bpfbyr;
+    ws.register_resource("bpfby", &bpfbyr, true);
+    Demo_UIB_Resource duibr;
+    ws.register_resource("duib", &duibr, true);
+    Big_UIB_Resource buibr;
+    ws.register_resource("buib", &buibr, true);
+    
     
     //run the server
     ws.start(true);

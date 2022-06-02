@@ -1,0 +1,48 @@
+Source_File: ../../../data_sources/card_transaction.v1.csv
+Transaction_Count: 24386900
+Distinct_Users: 2000
+Distinct_Merchants: 100343
+Distinct_Years: 30
+Years: 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 
+Error_Transactions: 776837
+CardNumber_Errors: 13585
+BadPin_Errors: 59627
+BadExpy_Errors: 10930
+BadCVV_Errors: 10957
+TechGlitch_Errors: 48828
+Lowbalance_Errors: 244125
+Total_Users_No_Insuf_Bal: 175
+Total_Users_One+_Insuf_Bal: 1825
+Total_Users_Two+_Insuf_Bal: 1721
+Fraud_Transactions: 29757
+Fraud_By_Years: 
+Year: 1991 Total_Transactions: 1585 Total_Fraud: 0
+Year: 1992 Total_Transactions: 5134 Total_Fraud: 0
+Year: 1993 Total_Transactions: 8378 Total_Fraud: 0
+Year: 1994 Total_Transactions: 14316 Total_Fraud: 0
+Year: 1995 Total_Transactions: 20928 Total_Fraud: 0
+Year: 1996 Total_Transactions: 29945 Total_Fraud: 10
+Year: 1997 Total_Transactions: 49753 Total_Fraud: 32
+Year: 1998 Total_Transactions: 78345 Total_Fraud: 32
+Year: 1999 Total_Transactions: 118250 Total_Fraud: 24
+Year: 2000 Total_Transactions: 177729 Total_Fraud: 171
+Year: 2001 Total_Transactions: 257998 Total_Fraud: 354
+Year: 2002 Total_Transactions: 350732 Total_Fraud: 139
+Year: 2003 Total_Transactions: 466408 Total_Fraud: 311
+Year: 2004 Total_Transactions: 597003 Total_Fraud: 620
+Year: 2005 Total_Transactions: 746653 Total_Fraud: 229
+Year: 2006 Total_Transactions: 908793 Total_Fraud: 1118
+Year: 2007 Total_Transactions: 1064483 Total_Fraud: 1881
+Year: 2008 Total_Transactions: 1223460 Total_Fraud: 3710
+Year: 2009 Total_Transactions: 1355434 Total_Fraud: 1140
+Year: 2010 Total_Transactions: 1491225 Total_Fraud: 3835
+Year: 2011 Total_Transactions: 1570551 Total_Fraud: 55
+Year: 2012 Total_Transactions: 1610829 Total_Fraud: 1333
+Year: 2013 Total_Transactions: 1650917 Total_Fraud: 2018
+Year: 2014 Total_Transactions: 1672343 Total_Fraud: 1052
+Year: 2015 Total_Transactions: 1701371 Total_Fraud: 3281
+Year: 2016 Total_Transactions: 1708924 Total_Fraud: 3579
+Year: 2017 Total_Transactions: 1723360 Total_Fraud: 255
+Year: 2018 Total_Transactions: 1721615 Total_Fraud: 2491
+Year: 2019 Total_Transactions: 1723938 Total_Fraud: 2087
+Year: 2020 Total_Transactions: 336500 Total_Fraud: 0
