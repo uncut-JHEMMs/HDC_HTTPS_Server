@@ -15,10 +15,11 @@ void testStats()
     MartStats stats;
     assert(stats.m_distinctUsers == 0);
     getStats(stats, BIGSRC);
-    //getStats(stats, "singleInput.csv");
-    //assert(stats.m_inFileName == BIGSRC);
-    //assert(stats.m_distinctUsers == 2000);
+
+    assert(stats.m_inFileName == BIGSRC);
+    assert(stats.m_distinctUsers == 2000);
     printStats(stats,outFile);
+    getStats(stats, "lilInput.csv");
 }
 
 /*
@@ -43,7 +44,7 @@ void testMarts()
 }
 int main()
 {
-    //testClean();
-    //testStats();
+    testClean();
+    testStats();
     testMarts();
 }

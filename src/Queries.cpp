@@ -8,8 +8,162 @@
 #include <sstream>
 #include "Queries.hpp"
 #include "tinyxml2.h"
+#include <iomanip>
 
 #define TEMPFILENAME "tempfile.xml"
+
+/*
+    Respond to the "Percentage of Fraud By Year" query:
+    open the stats file, navigate down to the 19th line (where the year frauds
+    are), then get each year (entry 2), transactions (entry 4), and fraud 
+    (entry 6). Do floating point division to get a percentage, then make and
+    return the xml document.
+*/
+std::string getFraudByYear(const std::string statsFileName)
+{
+    std::vector<YearPercentFraud> vec;
+    std::ifstream dbFile(statsFileName.c_str(), std::ifstream::in);
+    if (!dbFile.is_open()){
+    std::string error = "couldn't open stats file";
+    return error;
+    }
+    std::string inputLine, inputVal;
+    std::stringstream sstream;
+    //navigate to line 19
+    for (int i = 0; i < 18; ++i) //only go to 18 so we start looping at the next one
+    {
+        std::getline(dbFile,inputLine);
+    }
+    //get the values and populate vector: 2 for year, 4 for total, 6 for fraud
+    while (std::getline(dbFile, inputLine))
+    {
+     sstream.str("");
+     sstream.clear();
+     sstream.str(inputLine);
+     sstream >> inputVal;
+     sstream >> inputVal; //year
+     //yPF.yearString = inputVal;
+     std::string yearString = inputVal;
+     sstream >> inputVal;
+     sstream >> inputVal; //total transactions
+     float totalTrans = std::stof(inputVal);
+     sstream >> inputVal;
+     sstream >> inputVal;
+     float totalFraud = std::stof(inputVal);
+     float percentFraud = (totalFraud * 100) / totalTrans;
+     sstream.str("");
+     sstream.clear();
+     sstream << std::fixed << std::setprecision(3) << percentFraud << "%";
+     sstream >> inputVal;
+     vec.emplace_back(yearString, inputVal);
+    } 
+    //make xml doc
+    tinyxml2::XMLDocument doc;
+    //create a node
+    tinyxml2::XMLNode* pRoot = doc.NewElement("PercentFraudByYear");
+    //attach the node to the document
+    doc.InsertFirstChild(pRoot);
+    //now add children to root
+    tinyxml2::XMLElement* pElement;
+    for (const YearPercentFraud& yPF : vec)
+    {
+        pElement = doc.NewElement("Record");
+        pElement->SetAttribute("Year",yPF.yearString.c_str());
+        pElement->SetText(yPF.percentFraud.c_str());
+        pRoot->InsertEndChild(pElement);
+    }
+    //save xml document and return the filename
+    doc.SaveFile(TEMPFILENAME);
+    std::string tempFile{TEMPFILENAME};
+    return tempFile;
+}
+
+/*
+    Respond to "Users with Insufficient Balance" stories. Navigate to line 3,
+    item 2 to get the total number of users. Navigate to line 14, item 2 for 
+    no insufficient balance errors, line 15, item 2 for 1 or more, line 16, item
+    2 for more than 1
+*/
+std::string getUIB(const std::string statsFileName)
+{
+    std::ifstream dbFile(statsFileName.c_str(), std::ifstream::in);
+    if (!dbFile.is_open()){
+    std::string error = "couldn't open stats file";
+    return error;
+    }
+    std::string inputLine, inputVal;
+    std::stringstream sstream;
+    //head to line 3
+    std::getline(dbFile, inputLine);
+    std::getline(dbFile, inputLine);
+    std::getline(dbFile, inputLine);
+    sstream.str(inputLine);
+    sstream >> inputVal;
+    sstream >> inputVal; //total users
+    float totalUsers = stof(inputVal);
+    //head down to the insufficient numbers
+    for (int i = 0 ; i < 11; ++i)
+    {
+        std::getline(dbFile, inputLine);
+    }
+    sstream.str("");
+    sstream.clear();
+    sstream.str(inputLine);
+    sstream >> inputVal;
+    sstream >> inputVal; //0 IB
+    float noIB = stof(inputVal);
+    std::getline(dbFile, inputLine);
+    sstream.str("");
+    sstream.clear();
+    sstream.str(inputLine);
+    sstream >> inputVal;
+    sstream >> inputVal; //1 or more IB
+    float oneplusIB = stof(inputVal);
+    std::getline(dbFile, inputLine);
+    sstream.str("");
+    sstream.clear();
+    sstream.str(inputLine);
+    sstream >> inputVal;
+    sstream >> inputVal; //more than 1 IB
+    float twoplusIB = stof(inputVal);
+    float percentNo = (noIB * 100.0) / totalUsers;
+    float percentOnePlus = (oneplusIB * 100.00) / totalUsers;
+    float percentTwoPlus = (twoplusIB * 100.00) / totalUsers;
+    sstream.str("");
+    sstream.clear();
+    sstream << std::fixed << std::setprecision(3) << percentNo;
+    //make xml doc
+    tinyxml2::XMLDocument doc;
+    //create a node
+    tinyxml2::XMLNode* pRoot = doc.NewElement("InsufficientBalances");
+    //attach the node to the document
+    doc.InsertFirstChild(pRoot);
+    //now add children to root
+    tinyxml2::XMLElement* pElement;
+    pElement = doc.NewElement("Record");
+    pElement->SetAttribute("Errors", "None");
+    pElement->SetText(sstream.str().c_str());
+    pRoot->InsertEndChild(pElement);
+    pElement = doc.NewElement("Record");
+    pElement->SetAttribute("Errors", "OnePlus");
+    sstream.clear();
+    sstream.str("");
+    sstream << std::fixed << std::setprecision(3) << percentOnePlus;
+    pElement->SetText(sstream.str().c_str());
+    pRoot->InsertEndChild(pElement);
+    pElement = doc.NewElement("Record");
+    pElement->SetAttribute("Errors", "TwoPlus");
+    sstream.clear();
+    sstream.str("");
+    sstream << std::fixed << std::setprecision(3) << percentTwoPlus;
+    pElement->SetText(sstream.str().c_str());
+    pRoot->InsertEndChild(pElement);
+    //save xml document and return the filename
+    doc.SaveFile(TEMPFILENAME);
+    std::string tempFile{TEMPFILENAME};
+    return tempFile;
+}
+
 /*
     returns a string that lists all the transaction types, maybe in
     a JSON-like array
@@ -265,6 +419,7 @@ std::string getUserTransactions(const std::string& dbFileName, const std::string
     Method that services the "Top 10 largest transactions" query. Returns a vector
     of transactions that gets turned into an xml document later
 */
+/*
 void top10largestTransactions(std::vector<TransactionRecord>& vec, const std::string& dbFileName)
 {
     //look through the input file
@@ -297,3 +452,4 @@ void top10largestTransactions(std::vector<TransactionRecord>& vec, const std::st
     }
     //after I've looked through the entire file, then we're done
 }
+*/

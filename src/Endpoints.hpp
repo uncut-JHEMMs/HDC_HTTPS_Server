@@ -9,14 +9,10 @@
 #include "Logger.hpp"
 #include "LogMessage.hpp"
 #include "Queries.hpp"
-
+const std::string DEMOSTATSFILENAME{"testing/demoStats.txt"};
+const std::string BIGSTATSFILENAME{"testing/bigStats.txt"};
 const std::string QUERYFILENAME{"../DataGen/lilOutput.fsv"};
 extern Logger logger;
-/*
-    I'm not sure if I need a class that inherits httpserver::http_resource.
-    I'll know if there are functionalities that are common to each of these
-    endpoints besides needing to report the 
-*/
 
 //used for digest
 #define MY_OPAQUE "11733b200778ce33060f31c9af70a870ba96ddd4"
@@ -44,6 +40,111 @@ std::string cleanUserName(const std::string& user)
     return fullName;
 }
 
+/*
+    Services the Percent Fraud By Year Query with demo data
+*/
+class Demo_PFBY_Resource : public httpserver::http_resource 
+{
+public:
+    //digest authentication part
+    const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) 
+    {
+        if (req.get_digested_user() == "") 
+        {
+                return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, true));
+        } 
+        else 
+        {
+            bool reload_nonce = false;
+            if (!req.check_digest_auth("test@example.com", "mypass", 300, &reload_nonce)) 
+            {
+                return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, reload_nonce));
+            }
+        }
+        //check the argument if it matches users or merchants and return the appropriate file
+        
+        std::string result = getFraudByYear(DEMOSTATSFILENAME);
+        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response(result.c_str(), 200, "text/xml"));
+    }
+};
+
+class Demo_UIB_Resource : public httpserver::http_resource 
+{
+public:
+    //digest authentication part
+    const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) 
+    {
+        if (req.get_digested_user() == "") 
+        {
+                return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, true));
+        } 
+        else 
+        {
+            bool reload_nonce = false;
+            if (!req.check_digest_auth("test@example.com", "mypass", 300, &reload_nonce)) 
+            {
+                return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, reload_nonce));
+            }
+        }
+        //check the argument if it matches users or merchants and return the appropriate file
+        
+        std::string result = getUIB(DEMOSTATSFILENAME);
+        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response(result.c_str(), 200, "text/xml"));
+    }
+};
+
+class Big_UIB_Resource : public httpserver::http_resource 
+{
+public:
+    //digest authentication part
+    const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) 
+    {
+        if (req.get_digested_user() == "") 
+        {
+                return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, true));
+        } 
+        else 
+        {
+            bool reload_nonce = false;
+            if (!req.check_digest_auth("test@example.com", "mypass", 300, &reload_nonce)) 
+            {
+                return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, reload_nonce));
+            }
+        }
+        //check the argument if it matches users or merchants and return the appropriate file
+        
+        std::string result = getUIB(BIGSTATSFILENAME);
+        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response(result.c_str(), 200, "text/xml"));
+    }
+};
+
+/*
+    Services the Percent Fraud By Year Query with demo data
+*/
+class Big_PFBY_Resource : public httpserver::http_resource 
+{
+public:
+    //digest authentication part
+    const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) 
+    {
+        if (req.get_digested_user() == "") 
+        {
+                return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, true));
+        } 
+        else 
+        {
+            bool reload_nonce = false;
+            if (!req.check_digest_auth("test@example.com", "mypass", 300, &reload_nonce)) 
+            {
+                return std::shared_ptr<httpserver::digest_auth_fail_response>(new httpserver::digest_auth_fail_response("FAIL", "test@example.com", MY_OPAQUE, reload_nonce));
+            }
+        }
+        //check the argument if it matches users or merchants and return the appropriate file
+        
+        std::string result = getFraudByYear(BIGSTATSFILENAME);
+        return std::shared_ptr<httpserver::file_response>(new httpserver::file_response(result.c_str(), 200, "text/xml"));
+    }
+};
 
 class hello_world_resource : public httpserver::http_resource {
     const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) {
@@ -63,6 +164,7 @@ class hello_world_resource : public httpserver::http_resource {
         //return std::shared_ptr<httpserver::string_response>(new httpserver::string_response("Hello World", 200, "text/plain"));
      }
 };
+
 //servers the user documents
 class docs_resource : public httpserver::http_resource 
 {

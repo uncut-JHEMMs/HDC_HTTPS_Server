@@ -7,8 +7,27 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include "../DataGen/TransactionRecord.hpp"
+//#include "../DataGen/TransactionRecord.hpp"
 
+/*
+    type for fraud by year story
+*/
+struct YearPercentFraud
+{
+    std::string yearString;
+    std::string percentFraud;
+    YearPercentFraud(const std::string& string, const std::string& perc):
+     yearString(string), percentFraud(perc){}
+};
+
+/*
+    respond to "fraud by year" query
+*/
+std::string getFraudByYear(const std::string statsFileName);
+/*
+    respond to "Users with insufficient balance" query
+*/
+std::string getUIB(const std::string statsFileName);
 /*
     returns a string that lists all the transaction types, maybe in
     a JSON-like array
@@ -26,6 +45,6 @@ std::string getNumberOfMerchants(const std::string& dbFileName);
 */
 std::string getUserTransactions(const std::string& dbFileName, const std::string& userName);
 
-void top10largestTransactions(std::vector<TransactionRecord>& vec, const std::string& dbFileName);
+//void top10largestTransactions(std::vector<TransactionRecord>& vec, const std::string& dbFileName);
 #endif
 

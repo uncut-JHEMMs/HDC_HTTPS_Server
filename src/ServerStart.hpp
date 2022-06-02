@@ -8,6 +8,7 @@
 #include <httpserver.hpp>
 #include "ServerConfig.hpp"
 #include "Endpoints.hpp"
+#include "Marts.hpp"
 #include "tinyxml2.h"
 #include "Logger.hpp"
 #include <fstream>
