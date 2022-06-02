@@ -23,6 +23,8 @@ lilXML:
 testDataManip.exe: dataManipulatorTests.cpp
 	$(CC) -o testDataManip.exe $(CFLAGS) ../DataManipulator.cpp dataManipulatorTests.cpp 
 
+testStats.exe: testStats.cpp ../Marts.cpp ../Marts.hpp
+	$(CC) -o testStats.exe -pthread $(CFLAGS) ../Marts.cpp testStats.cpp
 
 .PHONY: clean # don't mess with files named "clean", just use the clean rule
 

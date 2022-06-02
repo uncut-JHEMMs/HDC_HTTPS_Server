@@ -180,7 +180,7 @@ void testAsciiTRToRDF(){
     char cline[35];
     //check that each field is right, we want to test every variation: different years, times, amounts, types, cities, states, zips, errors, frauds
     dm.asciiTRtoCDF(input, cline);
-    assert(DataManipulator::getIntFrom4Bytes())
+    //here's where we're testing this representation
 }
 
 void testSmall(){

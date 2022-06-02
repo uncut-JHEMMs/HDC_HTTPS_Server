@@ -1,11 +1,11 @@
 User,Card,Year,Month,Day,Time,Amount,Use Chip,Merchant Name,Merchant City,Merchant State,Zip,MCC,Errors?,Is Fraud?
 0,0,2002,9,1,06:21,$134.09,Swipe Transaction,3527213246127876953,La Verne,CA,91750.0,5300,,No
-0,0,2002,9,1,06:42,$38.48,Swipe Transaction,-727612092139916043,Monterey Park,CA,91754.0,5411,,No
-0,1,2002,9,2,06:22,$120.34,Online Transaction,-727612092139916043,Monterey Park,CA,91754.0,5411,,No
-0,2,2002,9,2,17:45,$128.95,Chip Transaction,3414527459579106770,Monterey Park,CA,91754.0,5651,,No
-0,0,2002,9,3,06:23,$104.71,Swipe Transaction,5817218446178736267,La Verne,CA,91750.0,5912,,No
-1,0,2002,9,3,13:53,$86.19,Swipe Transaction,-7146670748125200898,Monterey Park,CA,91755.0,5970,,No
-1,1,2002,9,4,05:51,$93.84,Chip Transaction,-727612092139916043,Monterey Park,CA,91754.0,5411,,No
+0,0,2002,9,1,06:42,$38.48,Swipe Transaction,-727612092139916043,Monterey Park,CA,91754.0,5411,"Technical Glitch,",Yes
+0,1,2003,9,2,06:22,$120.34,Online Transaction,-727612092139916043,Monterey Park,CA,91754.0,5411,"Bad CVV,",Yes
+0,2,2003,9,2,17:45,$128.95,Chip Transaction,3414527459579106770,Monterey Park,CA,91754.0,5651,,No
+0,0,2004,9,3,06:23,$104.71,Swipe Transaction,5817218446178736267,La Verne,CA,91750.0,5912,"Bad Expiration,",Yes
+1,0,2004,9,3,13:53,$86.19,Swipe Transaction,-7146670748125200898,Monterey Park,CA,91755.0,5970,,No
+1,1,2004,9,4,05:51,$93.84,Chip Transaction,-727612092139916043,Monterey Park,CA,91754.0,5411,"Bad PIN, Bad Card Number,",Yes
 1,2,2002,9,4,06:09,$123.50,Swipe Transaction,-727612092139916043,Monterey Park,CA,91754.0,5411,,No
-2,0,2002,9,5,06:14,$61.72,Swipe Transaction,-727612092139916043,Monterey Park,CA,91754.0,5411,,No
-2,1,2002,9,5,09:35,$57.10,Swipe Transaction,4055257078481058705,La Verne,CA,91750.0,7538,,No
+2,0,2011,9,5,06:14,$61.72,Swipe Transaction,-727612092139916043,Monterey Park,CA,91754.0,5411,"Insufficient Balance,",No
+2,1,2012,9,5,09:35,$57.10,Swipe Transaction,4055257078481058705,La Verne,CA,91750.0,7538,,Yes

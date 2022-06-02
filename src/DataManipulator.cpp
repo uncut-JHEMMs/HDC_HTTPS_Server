@@ -162,6 +162,8 @@ unsigned char DataManipulator::errorsToChar(const std::string& errors)
         {
             res += TRErrors::INSUFF_BAL;
         }
+        //WORKING HERE, ADD THE REST OF THE ERRORS, CORRECT THE STRING FORMATTING
+
     }
     return res;
 }
