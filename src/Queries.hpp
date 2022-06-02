@@ -45,6 +45,15 @@ std::string getNumberOfMerchants(const std::string& dbFileName);
 */
 std::string getUserTransactions(const std::string& dbFileName, const std::string& userName);
 
+/*
+    Populate FraudByYear's vector and return it
+*/
+std::vector<YearPercentFraud> populateVectorFBY(const std::string statsFileName);
+
+/*
+    build the xml document for reporting yearPercentFraud
+*/
+std::string buildXML(const std::vector<YearPercentFraud>& vec);
 //void top10largestTransactions(std::vector<TransactionRecord>& vec, const std::string& dbFileName);
 #endif
 

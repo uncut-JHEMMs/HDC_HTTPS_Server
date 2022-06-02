@@ -11,7 +11,7 @@
 #include <iomanip>
 
 #define TEMPFILENAME "tempfile.xml"
-
+#define FRAUDROWSTART 18
 /*
     Respond to the "Percentage of Fraud By Year" query:
     open the stats file, navigate down to the 19th line (where the year frauds
@@ -21,61 +21,9 @@
 */
 std::string getFraudByYear(const std::string statsFileName)
 {
-    std::vector<YearPercentFraud> vec;
-    std::ifstream dbFile(statsFileName.c_str(), std::ifstream::in);
-    if (!dbFile.is_open()){
-    std::string error = "couldn't open stats file";
-    return error;
-    }
-    std::string inputLine, inputVal;
-    std::stringstream sstream;
-    //navigate to line 19
-    for (int i = 0; i < 18; ++i) //only go to 18 so we start looping at the next one
-    {
-        std::getline(dbFile,inputLine);
-    }
-    //get the values and populate vector: 2 for year, 4 for total, 6 for fraud
-    while (std::getline(dbFile, inputLine))
-    {
-     sstream.str("");
-     sstream.clear();
-     sstream.str(inputLine);
-     sstream >> inputVal;
-     sstream >> inputVal; //year
-     //yPF.yearString = inputVal;
-     std::string yearString = inputVal;
-     sstream >> inputVal;
-     sstream >> inputVal; //total transactions
-     float totalTrans = std::stof(inputVal);
-     sstream >> inputVal;
-     sstream >> inputVal;
-     float totalFraud = std::stof(inputVal);
-     float percentFraud = (totalFraud * 100) / totalTrans;
-     sstream.str("");
-     sstream.clear();
-     sstream << std::fixed << std::setprecision(3) << percentFraud << "%";
-     sstream >> inputVal;
-     vec.emplace_back(yearString, inputVal);
-    } 
-    //make xml doc
-    tinyxml2::XMLDocument doc;
-    //create a node
-    tinyxml2::XMLNode* pRoot = doc.NewElement("PercentFraudByYear");
-    //attach the node to the document
-    doc.InsertFirstChild(pRoot);
-    //now add children to root
-    tinyxml2::XMLElement* pElement;
-    for (const YearPercentFraud& yPF : vec)
-    {
-        pElement = doc.NewElement("Record");
-        pElement->SetAttribute("Year",yPF.yearString.c_str());
-        pElement->SetText(yPF.percentFraud.c_str());
-        pRoot->InsertEndChild(pElement);
-    }
-    //save xml document and return the filename
-    doc.SaveFile(TEMPFILENAME);
-    std::string tempFile{TEMPFILENAME};
-    return tempFile;
+    std::vector<YearPercentFraud> vec = populateVectorFBY(statsFileName);
+    std::string outFileName = buildXML(vec);
+    return outFileName;
 }
 
 /*
@@ -410,6 +358,75 @@ std::string getUserTransactions(const std::string& dbFileName, const std::string
     pElement->SetText(sres.c_str());
     pRoot->InsertEndChild(pElement);
     dbFile.close();
+    doc.SaveFile(TEMPFILENAME);
+    std::string tempFile{TEMPFILENAME};
+    return tempFile;
+}
+std::vector<YearPercentFraud> populateVectorFBY(const std::string statsFileName)
+{
+    std::vector<YearPercentFraud> vec;
+    std::ifstream dbFile(statsFileName.c_str(), std::ifstream::in);
+    /* TODO This has to be fixed, there's no error checking now
+    if (!dbFile.is_open()){
+    std::string error = "couldn't open stats file";
+    return error;
+    }
+    */
+
+    std::string inputLine, inputVal;
+    std::stringstream sstream;
+    //navigate to line 19
+    for (int i = 0; i < FRAUDROWSTART; ++i) //only go to 18 so we start looping at the next one
+    {
+        std::getline(dbFile,inputLine);
+    }
+    //get the values and populate vector: 2 for year, 4 for total, 6 for fraud
+    while (std::getline(dbFile, inputLine))
+    {
+     sstream.str("");
+     sstream.clear();
+     sstream.str(inputLine);
+     sstream >> inputVal;
+     sstream >> inputVal; //year
+     //yPF.yearString = inputVal;
+     std::string yearString = inputVal;
+     sstream >> inputVal;
+     sstream >> inputVal; //total transactions
+     float totalTrans = std::stof(inputVal);
+     sstream >> inputVal;
+     sstream >> inputVal;
+     float totalFraud = std::stof(inputVal);
+     float percentFraud = (totalFraud * 100) / totalTrans;
+     sstream.str("");
+     sstream.clear();
+     sstream << std::fixed << std::setprecision(3) << percentFraud << "%";
+     sstream >> inputVal;
+     vec.emplace_back(yearString, inputVal);
+    }
+    return vec;
+}
+
+/*
+    build an xml file from the fby vector, return the filename
+*/
+std::string buildXML(const std::vector<YearPercentFraud>& vec)
+{
+    //make xml doc
+    tinyxml2::XMLDocument doc;
+    //create a node
+    tinyxml2::XMLNode* pRoot = doc.NewElement("PercentFraudByYear");
+    //attach the node to the document
+    doc.InsertFirstChild(pRoot);
+    //now add children to root
+    tinyxml2::XMLElement* pElement;
+    for (const YearPercentFraud& yPF : vec)
+    {
+        pElement = doc.NewElement("Record");
+        pElement->SetAttribute("Year",yPF.yearString.c_str());
+        pElement->SetText(yPF.percentFraud.c_str());
+        pRoot->InsertEndChild(pElement);
+    }
+    //save xml document and return the filename
     doc.SaveFile(TEMPFILENAME);
     std::string tempFile{TEMPFILENAME};
     return tempFile;
