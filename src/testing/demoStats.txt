@@ -1,0 +1,23 @@
+Source_File: lilInput.csv
+Transaction_Count: 12
+Distinct_Users: 4
+Distinct_Merchants: 6
+Distinct_Years: 5
+Years: 2016 2017 2018 2020 2021 
+Error_Transactions: 10
+CardNumber_Errors: 1
+BadPin_Errors: 1
+BadExpy_Errors: 1
+BadCVV_Errors: 1
+TechGlitch_Errors: 1
+Lowbalance_Errors: 3
+Total_Users_No_Insuf_Bal: 2
+Total_Users_One+_Insuf_Bal: 2
+Total_Users_Two+_Insuf_Bal: 1
+Fraud_Transactions: 5
+Fraud_By_Years: 
+Year: 2016 Total_Transactions: 3 Total_Fraud: 1
+Year: 2017 Total_Transactions: 2 Total_Fraud: 1
+Year: 2018 Total_Transactions: 3 Total_Fraud: 2
+Year: 2020 Total_Transactions: 1 Total_Fraud: 0
+Year: 2021 Total_Transactions: 3 Total_Fraud: 1

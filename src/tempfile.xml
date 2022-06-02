@@ -1,52 +1,5 @@
-<User Transactions>
-    <Title>Transactions by User: James Logan</Title>
-    <Transaction>
-        <Credit Card>4122225678987668</Credit Card>
-        <Year>2002</Year>
-        <Month>9</Month>
-        <Day>3</Day>
-        <Time>13:53</Time>
-        <Amount>$86.19</Amount>
-        <Transaction Type>Swipe Transaction</Transaction Type>
-        <Merchant>Mark's Crepe Mom-and-Pop</Merchant>
-        <City>Monterey Park</City>
-        <State>CA</State>
-        <Zip Code>91755</Zip Code>
-        <MCC>5970</MCC>
-        <Errors></Errors>
-        <Fraud>No</Fraud>
-    </Transaction>
-    <Transaction>
-        <Credit Card>5533331712023369</Credit Card>
-        <Year>2002</Year>
-        <Month>9</Month>
-        <Day>4</Day>
-        <Time>05:51</Time>
-        <Amount>$93.84</Amount>
-        <Transaction Type>Chip Transaction</Transaction Type>
-        <Merchant>Juliet's Book Collection</Merchant>
-        <City>Monterey Park</City>
-        <State>CA</State>
-        <Zip Code>91754</Zip Code>
-        <MCC>5411</MCC>
-        <Errors></Errors>
-        <Fraud>No</Fraud>
-    </Transaction>
-    <Transaction>
-        <Credit Card>3735556181152031</Credit Card>
-        <Year>2002</Year>
-        <Month>9</Month>
-        <Day>4</Day>
-        <Time>06:09</Time>
-        <Amount>$123.50</Amount>
-        <Transaction Type>Swipe Transaction</Transaction Type>
-        <Merchant>Juliet's Book Collection</Merchant>
-        <City>Monterey Park</City>
-        <State>CA</State>
-        <Zip Code>91754</Zip Code>
-        <MCC>5411</MCC>
-        <Errors></Errors>
-        <Fraud>No</Fraud>
-    </Transaction>
-    <Count>Total number of transactions by user: 3</Count>
-</User Transactions>
+<InsufficientBalances>
+    <Record Errors="None">8.750</Record>
+    <Record Errors="OnePlus">91.250</Record>
+    <Record Errors="TwoPlus">86.050</Record>
+</InsufficientBalances>

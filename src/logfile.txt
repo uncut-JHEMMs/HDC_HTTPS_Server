@@ -1,4 +1,4 @@
-Wed May  4 13:04:34 2022
+Thu Jun  2 13:47:25 2022
 Server building from config file
 Server configuration:
 Port Number: 8080
@@ -10,26 +10,45 @@ HTTPS: 1
 Map IPv4 into IPv6: 1
 SSL Certificate: ../PKI/certs/mycert.crt
 SSL Key: ../PKI/ca/mykey.pem
-Wed May  4 13:04:43 2022
-Access logged at /xml?type=merchantCount METHOD: GET
-Wed May  4 13:04:48 2022
-Access logged at /xml?type=merchantCount METHOD: GET
-Wed May  4 13:05:09 2022
-Access logged at /xml?type=transactionTypes METHOD: GET
-Wed May  4 13:05:32 2022
-Access logged at /xml?type=transactionTypes METHOD: GET
-Wed May  4 13:07:09 2022
-Access logged at /xml?type=users METHOD: GET
-Wed May  4 13:07:25 2022
-Access logged at /xml?type=users&&name=Jack%20Lewis METHOD: GET
-Wed May  4 13:08:11 2022
-Access logged at /xml?type=users&&name=Jack%20Lewis METHOD: GET
-Wed May  4 13:08:39 2022
-Access logged at /xml?type=users METHOD: GET
-Wed May  4 13:11:25 2022
-Access logged at /xml?type=users&&name=Jack%20Lewis METHOD: GET
-Wed May  4 13:11:25 2022
-Access logged at /xml?type=users&&name=Jack%20Lewis METHOD: GET
-Wed May  4 13:11:44 2022
-Access logged at /xml?type=users&&name=James%20Logan METHOD: GET
-Interrupt signal received, shutting down.
+Thu Jun  2 13:47:34 2022
+Access logged at /duib METHOD: GET
+Thu Jun  2 13:47:34 2022
+Access logged at /duib METHOD: GET
+Thu Jun  2 13:47:38 2022
+Access logged at /duib METHOD: GET
+Thu Jun  2 13:47:45 2022
+Access logged at /dpfby METHOD: GET
+Thu Jun  2 13:47:45 2022
+Access logged at /dpfby METHOD: GET
+Thu Jun  2 13:47:47 2022
+Access logged at /dpfby METHOD: GET
+Thu Jun  2 13:47:54 2022
+Access logged at /bpfby METHOD: GET
+Thu Jun  2 13:47:54 2022
+Access logged at /bpfby METHOD: GET
+Thu Jun  2 13:47:55 2022
+Access logged at /bpfby METHOD: GET
+Thu Jun  2 13:48:18 2022
+Access logged at /dpfby METHOD: GET
+Thu Jun  2 13:48:18 2022
+Access logged at /dpfby METHOD: GET
+Thu Jun  2 14:42:25 2022
+Access logged at /dpfby METHOD: GET
+Thu Jun  2 14:42:25 2022
+Access logged at /dpfby METHOD: GET
+Thu Jun  2 14:42:43 2022
+Access logged at /bpfby METHOD: GET
+Thu Jun  2 14:42:43 2022
+Access logged at /bpfby METHOD: GET
+Thu Jun  2 14:42:43 2022
+Access logged at /bpfby METHOD: GET
+Thu Jun  2 14:44:08 2022
+Access logged at /duib METHOD: GET
+Thu Jun  2 14:44:08 2022
+Access logged at /duib METHOD: GET
+Thu Jun  2 14:44:22 2022
+Access logged at /buib METHOD: GET
+Thu Jun  2 14:44:22 2022
+Access logged at /buib METHOD: GET
+Thu Jun  2 14:44:23 2022
+Access logged at /buib METHOD: GET
