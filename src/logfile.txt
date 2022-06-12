@@ -1,4 +1,4 @@
-Thu Jun  2 13:47:25 2022
+Sat Jun 11 22:44:21 2022
 Server building from config file
 Server configuration:
 Port Number: 8080
@@ -10,45 +10,8 @@ HTTPS: 1
 Map IPv4 into IPv6: 1
 SSL Certificate: ../PKI/certs/mycert.crt
 SSL Key: ../PKI/ca/mykey.pem
-Thu Jun  2 13:47:34 2022
-Access logged at /duib METHOD: GET
-Thu Jun  2 13:47:34 2022
-Access logged at /duib METHOD: GET
-Thu Jun  2 13:47:38 2022
-Access logged at /duib METHOD: GET
-Thu Jun  2 13:47:45 2022
-Access logged at /dpfby METHOD: GET
-Thu Jun  2 13:47:45 2022
-Access logged at /dpfby METHOD: GET
-Thu Jun  2 13:47:47 2022
-Access logged at /dpfby METHOD: GET
-Thu Jun  2 13:47:54 2022
-Access logged at /bpfby METHOD: GET
-Thu Jun  2 13:47:54 2022
-Access logged at /bpfby METHOD: GET
-Thu Jun  2 13:47:55 2022
-Access logged at /bpfby METHOD: GET
-Thu Jun  2 13:48:18 2022
-Access logged at /dpfby METHOD: GET
-Thu Jun  2 13:48:18 2022
-Access logged at /dpfby METHOD: GET
-Thu Jun  2 14:42:25 2022
-Access logged at /dpfby METHOD: GET
-Thu Jun  2 14:42:25 2022
-Access logged at /dpfby METHOD: GET
-Thu Jun  2 14:42:43 2022
-Access logged at /bpfby METHOD: GET
-Thu Jun  2 14:42:43 2022
-Access logged at /bpfby METHOD: GET
-Thu Jun  2 14:42:43 2022
-Access logged at /bpfby METHOD: GET
-Thu Jun  2 14:44:08 2022
-Access logged at /duib METHOD: GET
-Thu Jun  2 14:44:08 2022
-Access logged at /duib METHOD: GET
-Thu Jun  2 14:44:22 2022
-Access logged at /buib METHOD: GET
-Thu Jun  2 14:44:22 2022
-Access logged at /buib METHOD: GET
-Thu Jun  2 14:44:23 2022
-Access logged at /buib METHOD: GET
+Sat Jun 11 22:44:27 2022
+Access logged at /hello METHOD: GET
+Sat Jun 11 22:44:27 2022
+Access logged at /hello METHOD: GET
+Interrupt signal received, shutting down.
