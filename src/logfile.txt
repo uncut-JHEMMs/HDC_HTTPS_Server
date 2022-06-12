@@ -1,4 +1,4 @@
-Sat Jun 11 22:44:21 2022
+Sat Jun 11 23:08:03 2022
 Server building from config file
 Server configuration:
 Port Number: 8080
@@ -10,8 +10,4 @@ HTTPS: 1
 Map IPv4 into IPv6: 1
 SSL Certificate: ../PKI/certs/mycert.crt
 SSL Key: ../PKI/ca/mykey.pem
-Sat Jun 11 22:44:27 2022
-Access logged at /hello METHOD: GET
-Sat Jun 11 22:44:27 2022
-Access logged at /hello METHOD: GET
 Interrupt signal received, shutting down.
