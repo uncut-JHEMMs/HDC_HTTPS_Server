@@ -1,7 +1,7 @@
-Sun Jun 12 09:58:08 2022
-Server building from environment variables
+Sun Jun 12 11:39:50 2022
+Server building from config file
 Server configuration:
-Port Number: 8080
+Port Number: 8081
 Maximum Concurrent Connections: 10
 Maximum Connections Per IP: 11
 Timeout (in seconds): 5

@@ -16,7 +16,7 @@ int main(int argc, char **argv)
     /* If we have one arg, it's an input file. If there are no additional args,
      * then we check the environment variables
      */
-    ServerConfig sc,sC;
+    ServerConfig sc;
     std::string configMessage = getTimeStamp();
     if (argc == 2)
     {
@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     {
         // attempt to parse the config from the environment variables
         configMessage += "Server building from environment variables";
-        /*
+        
 	try{
             sc.populateAllFromEnv();
         }
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
             std::cout << c << std::endl;
             exit(2);
         }
-	*/
+	
     }
 
     //register signal handler with process
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
     
     //create the webserver from the config
     httpserver::create_webserver cw;
-    buildServer(cw, sC);
+    buildServer(cw, sc);
     httpserver::webserver ws(cw);
     
     //start loggers, log successful startup
