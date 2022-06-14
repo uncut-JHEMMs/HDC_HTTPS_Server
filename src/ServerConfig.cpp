@@ -308,15 +308,17 @@
 
     //default constructor assigns blank values
     ServerConfig::ServerConfig(){
-        portNumber = 0;
+        portNumber = 8080;
         doesBlock = true;
         dualStack = true;
-        connectionTimeout = 0;
-        maxConnections = 0;
-        threadPoolSize = 0;
+        connectionTimeout = 5;
+        maxConnections = 10;
+        threadPoolSize = 20;
         //reasonableThreadMax = 0;
-        maxConnectionsPerIP = 0;
-        useHTTPS = false;
+        maxConnectionsPerIP = 11;
+        useHTTPS = true;
+	pathToKeyFile = std::string{"../PKI/ca/mykey.pem"};
+	pathToCertFile = std::string{"../PKI/certs/mycert.crt"};
 
     }
     //parameterized constructor takes a string that reporesents the path to 

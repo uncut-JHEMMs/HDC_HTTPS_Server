@@ -17,7 +17,8 @@
 
 //for sleep for the stats thread
 using namespace std::chrono_literals;
-  Logger::Logger(std::string filename){
+  
+Logger::Logger(std::string filename){
     try{
       accessStream.open(filename.c_str());
       //stats file always has this name

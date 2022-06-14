@@ -35,13 +35,15 @@ int main(int argc, char **argv)
     {
         // attempt to parse the config from the environment variables
         configMessage += "Server building from environment variables";
-        try{
+        
+	try{
             sc.populateAllFromEnv();
         }
         catch(const char* c){
             std::cout << c << std::endl;
             exit(2);
         }
+	
     }
 
     //register signal handler with process
