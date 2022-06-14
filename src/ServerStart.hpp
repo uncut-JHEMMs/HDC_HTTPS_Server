@@ -15,7 +15,11 @@
 #include <cassert>
 #include <csignal>
 #include <ctime>
-
+/*
+#include <libxml/tree.h>
+#include <libxml/parser.h>
+#include <libxml/xmlreader.h>
+*/
 //global logger so everyone can see it, and logging threads
 Logger logger("logfile.txt");
 std::thread logThread;

@@ -13,7 +13,7 @@ class Parser{
         //use the key to get the value, subclasses concretize this
         virtual std::string getValueFromKey(const std::string& keyName) = 0;
         //check that a given input is a valid number (a positive integer)
-	    bool isValidNumber(const std::string& input) const;
+	bool isValidNumber(const std::string& input) const;
         //convert a string value into an unsigned int
         unsigned int convertToUInt(const std::string& value);
         //convert a string value to a boolean
@@ -40,6 +40,11 @@ class ConfigFileParser: public Parser{
 
 };
 
-//ENV Parser? there's really no data here, Don't think it's necessary
-
+class EnvParser: public Parser
+{
+	public:
+	EnvParser();
+	virtual ~EnvParser();
+	virtual std::string getValueFromKey(const std::string& keyName);
+};
 #endif
